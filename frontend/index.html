@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
+<html class="dark" lang="pt"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Amnesia Shh - Secure Transmission</title>
+<title>SecureShare — Novo Segredo</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -164,13 +163,13 @@
         }
       </script>
 <style>
-        body { background-color: #020617; } /* Midnight Blue override to match atmosphere requirement */
+        body { background-color: #020617; } /* Midnight Blue override */
         .glass-panel {
             background: rgba(15, 23, 42, 0.6); /* Slate container */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(34, 211, 238, 0.2); /* Low-opacity Cyan border */
-            box-shadow: 0 10px 25px -5px rgba(2, 6, 23, 0.8), 0 8px 10px -6px rgba(2, 6, 23, 0.8); /* Deep navy tint shadow */
+            box-shadow: 0 10px 25px -5px rgba(2, 6, 23, 0.8), 0 8px 10px -6px rgba(2, 6, 23, 0.8);
         }
         .glass-panel-active {
             border: 1px solid rgba(34, 211, 238, 0.5); /* Brighter Cyan border for active */
@@ -184,9 +183,13 @@
             box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
             transition: all 0.3s ease;
         }
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             box-shadow: 0 0 20px rgba(34, 211, 238, 0.8);
             transform: translateY(-1px);
+        }
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
         .btn-secondary {
             background-color: transparent;
@@ -227,23 +230,16 @@
 <body class="text-on-surface min-h-screen flex flex-col font-body-md antialiased overflow-x-hidden">
 <!-- TopAppBar -->
 <header class="bg-surface/60 backdrop-blur-xl dark:bg-surface-dim/60 fixed top-0 w-full z-50 border-b border-primary/20 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-surface-container-lowest/50">
-<div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto">
+<div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto w-full">
 <div class="flex items-center gap-4">
-<!-- Using requested logo image instead of leading icon from JSON to meet prompt requirements -->
-<img alt="Cristiano Ronaldo Logo" class="h-10 w-10 object-cover rounded-full border border-cyan-400/50" data-alt="A stylized, cyberpunk-inspired high-contrast portrait of Cristiano Ronaldo serving as a digital avatar or logo. The image features deep midnight blues and sharp neon cyan accents. It is highly detailed, evoking a sense of elite performance and advanced technology in a dark mode aesthetic. The lighting is dramatic, with soft glowing edges and deep shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeKO3G9RNLxdQnhdBJXEkPoUk3X6mzHPCVoi2gyHiXGRQzOFkXGYfuS9Q1kq1rHEYVrFlaaeYC7AzS2-BhGEm6HKpvF9FFs_ghwkBZyIXLSnIrCuHHEcbB-YC_63y6KE0kYvTuwV3jAGn4prpfL8tb3FpClXqjjbwbjkOfYQPbc92wec6Bj2W7GwidUINo8vY8JVeHBtoXOZzQj5qWP5joHJao6ofHojZF0arH_gu6Ylc9ri6qVet7yIxUY_2GrfQDQ4rh2JiPSG0"/>
-<span class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface">AMNENSIA SHH</span>
+<span class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface">SecureShare</span>
 </div>
 <div class="hidden md:flex gap-8 items-center">
-<a class="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Vault</a>
-<a class="font-mono-label text-mono-label text-primary font-bold active:scale-95 transition-transform flex items-center gap-2" href="#">
-<span class="w-1 h-4 bg-cyan-400 rounded-full shadow-[0_0_8px_#22d3ee]"></span>
-                    Network
-                </a>
-<a class="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Identity</a>
+<a class="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-300" href="view.html">Ver Segredos</a>
 </div>
 <button class="active:scale-95 transition-transform btn-secondary font-mono-label text-mono-label px-4 py-2 rounded-DEFAULT flex items-center gap-2">
 <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
-                SYSTEM SECURE
+                SEGURO
             </button>
 </div>
 </header>
@@ -254,15 +250,15 @@
 <!-- Left Panel: Payload Input -->
 <div class="flex-1 p-margin border-b lg:border-b-0 lg:border-r border-outline-variant/30 flex flex-col gap-6">
 <div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
-<h2 class="font-h3 text-h3 text-on-surface">Secret Payload</h2>
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+<h2 class="font-h3 text-h3 text-on-surface">Novo Segredo</h2>
 </div>
 <p class="font-body-md text-on-surface-variant/80">
-                    Enter the sensitive data to be encrypted. This payload will be sealed locally before transmission.
+                    Cifrado no teu browser. O servidor nunca vê o conteúdo em claro.
                 </p>
 <div class="relative flex-grow min-h-[300px]">
 <div class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
-<textarea class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label" placeholder="Enter highly classified text, credentials, or configuration data here..."></textarea>
+<textarea id="msg" class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label" placeholder="Escreve aqui o teu segredo..."></textarea>
 </div>
 </div>
 </div>
@@ -270,44 +266,43 @@
 <div class="w-full lg:w-[400px] p-margin bg-surface-container-low/30 flex flex-col gap-8">
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-primary text-[24px]">settings_suggest</span>
-<h3 class="font-body-lg text-body-lg text-on-surface font-semibold">Transmission Config</h3>
+<h3 class="font-body-lg text-body-lg text-on-surface font-semibold">Configuração</h3>
 </div>
 <div class="flex flex-col gap-6">
 <!-- TTL Dropdown -->
 <div class="flex flex-col gap-2">
 <label class="font-mono-label text-mono-label text-on-surface-variant flex items-center gap-2">
 <span class="material-symbols-outlined text-[16px]">hourglass_empty</span>
-                            Time-To-Live (TTL)
+                            Validade
                         </label>
-<select class="input-glass w-full py-3 px-4 rounded-DEFAULT font-body-md cursor-pointer appearance-none bg-surface-container-lowest/80">
-<option value="1h">1 Hour</option>
-<option value="24h">24 Hours</option>
-<option value="7d">7 Days</option>
-<option value="burn">Burn on read</option>
+<select id="ttl" class="input-glass w-full py-3 px-4 rounded-DEFAULT font-body-md cursor-pointer appearance-none bg-surface-container-lowest/80">
+<option value="3600">1 hora</option>
+<option value="86400" selected>1 dia</option>
+<option value="604800">7 dias</option>
 </select>
 </div>
 <!-- One-Time View Toggle -->
 <div class="flex items-center justify-between p-4 rounded-lg bg-surface-container-highest/20 border border-outline-variant/20">
 <div class="flex flex-col">
-<span class="font-mono-label text-mono-label text-on-surface">One-Time View</span>
-<span class="font-caption text-caption text-on-surface-variant">Destroy after first access</span>
+<span class="font-mono-label text-mono-label text-on-surface">Destruir após leitura</span>
+<span class="font-caption text-caption text-on-surface-variant">Remover após primeiro acesso</span>
 </div>
 <label class="relative inline-flex items-center cursor-pointer">
-<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<input id="oneTime" checked="" class="sr-only peer" type="checkbox" value=""/>
 <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#22d3ee] shadow-[0_0_10px_rgba(34,211,238,0.3)_inset]"></div>
 </label>
 </div>
-</div>
+</div></div>
 <div class="mt-auto pt-6 border-t border-outline-variant/20">
-<button class="w-full btn-primary font-mono-label text-mono-label py-4 rounded-DEFAULT flex items-center justify-center gap-2 uppercase tracking-widest">
+<button id="btnSend" class="w-full btn-primary font-mono-label text-mono-label py-4 rounded-DEFAULT flex items-center justify-center gap-2 uppercase tracking-widest">
 <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">lock_person</span>
-                        Generate Secure Link
+                        Gerar Link Seguro
                     </button>
 </div>
 </div>
 </div>
-<!-- Encrypted State Panel (Simulated Active State) -->
-<div class="w-full max-w-5xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative">
+<!-- Result Panel -->
+<div id="result" class="w-full max-w-5xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative d-none" style="display: none;">
 <!-- Glitch decorative top border -->
 <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80"></div>
 <div class="p-margin flex flex-col gap-6">
@@ -318,28 +313,24 @@
 <span class="material-symbols-outlined">enhanced_encryption</span>
 </div>
 <div>
-<h2 class="font-h3 text-h3 text-on-surface">Payload Encrypted</h2>
-<p class="font-caption text-caption text-on-surface-variant font-mono">Status: Ready for transmission</p>
+<h2 class="font-h3 text-h3 text-on-surface">Segredo Cifrado</h2>
+<p class="font-caption text-caption text-on-surface-variant font-mono">Estado: Pronto para partilha</p>
 </div>
 </div>
 <div class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
                         AES-256-GCM
                     </div>
 </div>
-<!-- Hash Preview -->
-<div class="bg-surface-container-lowest/80 p-4 rounded-lg border border-outline-variant/20 font-mono-label text-caption text-on-surface-variant/60 break-all">
-                    Hash: 7a9c8f0b1e2d3c4b5a69788796a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1
-                </div>
 <!-- Shareable Link -->
 <div class="flex flex-col gap-3">
-<label class="font-mono-label text-mono-label text-on-surface">Secure Transmission Link</label>
+<label class="font-mono-label text-mono-label text-on-surface">Link de Partilha Seguro (a chave nunca foi enviada para o servidor)</label>
 <div class="flex flex-col sm:flex-row gap-2">
-<div class="flex-grow bg-surface-container-lowest/80 border border-cyan-400/30 rounded-DEFAULT p-4 font-mono-label text-mono-label text-primary truncate">
-                            https://amnesia.shh/v/xk92-pL4m-8vNq-1cRt
+<div class="flex-grow bg-surface-container-lowest/80 border border-cyan-400/30 rounded-DEFAULT p-4 font-mono-label text-mono-label text-primary truncate overflow-auto">
+                            <input type="text" id="link" class="w-full bg-transparent border-none outline-none text-primary" readonly/>
                         </div>
-<button class="btn-secondary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap">
+<button onclick="navigator.clipboard.writeText(document.getElementById('link').value)" class="btn-secondary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap">
 <span class="material-symbols-outlined text-[18px]">content_copy</span>
-                            Copy Link
+                            Copiar
                         </button>
 </div>
 </div>
@@ -347,23 +338,80 @@
 <div class="mt-2 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 flex items-start gap-3">
 <span class="material-symbols-outlined text-amber-400 text-[20px] mt-0.5">warning</span>
 <p class="font-caption text-caption text-amber-200/80">
-                        This link will self-destruct immediately after reading. Ensure the recipient is ready before transmitting.
+                        Este link vai auto-destruir-se imediatamente após ser lido. Certifica-te que o destinatário está pronto antes de partilhar.
                     </p>
 </div>
 </div>
 </div>
+
+<!-- Error Panel -->
+<div id="error" class="w-full max-w-5xl bg-error-container/20 border border-error/30 rounded-xl overflow-hidden flex flex-col p-margin d-none" style="display: none;">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error text-[20px] mt-0.5">error</span>
+<p class="font-body-md text-error/90"></p>
+</div>
+</div>
+
 </main>
 <!-- Footer -->
 <footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-lg border-t border-outline-variant/30 border-t border-white/5 flat mt-auto">
 <div class="flex flex-col md:flex-row justify-between items-center px-margin gap-base max-w-7xl mx-auto w-full">
 <div class="font-mono-label text-mono-label text-on-surface">
-                AMNENSIA SHH © 2024 • SILENT GUARDIAN PROTOCOL
+                SecureShare © 2026 • Cifrado Zero-Knowledge
             </div>
 <div class="flex gap-6">
-<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Whitepaper</a>
-<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Security Audit</a>
-<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacidade</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Segurança</a>
 </div>
 </div>
 </footer>
-</body></html>
+</body>
+
+<script src="crypto.js"></script>
+<script>
+        const API_BASE_URL = 'http://localhost:5050';
+    const btn = document.getElementById('btnSend');
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      const errorBox = document.getElementById('error');
+      const resultBox = document.getElementById('result');
+      
+      errorBox.style.display = 'none';
+      resultBox.style.display = 'none';
+
+      try {
+        const text = document.getElementById('msg').value.trim();
+        if (!text) throw new Error('Segredo vazio.');
+
+        // 1. Gera a chave LOCALMENTE
+        const keyB64 = await SecureCrypto.generateKey();
+
+        // 2. Cifra o conteúdo
+        const ciphertext = await SecureCrypto.encryptText(text, keyB64);
+
+        // 3. Envia APENAS o blob cifrado
+                                const resp = await fetch(`${API_BASE_URL}/api/secrets`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            content: ciphertext,
+            ttl: parseInt(document.getElementById('ttl').value, 10),
+            one_time: document.getElementById('oneTime').checked
+          })
+        });
+        if (!resp.ok) throw new Error(`Servidor: ${resp.status}`);
+        const { id } = await resp.json();
+
+        // 4. Constrói o link com a chave APÓS o # (nunca chega ao servidor)
+        const url = new URL(`view.html?id=${id}#${keyB64}`, window.location.href).href;
+        document.getElementById('link').value = url;
+        resultBox.style.display = 'flex';
+      } catch (e) {
+        errorBox.textContent = `Erro: ${e.message}`;
+        errorBox.style.display = 'flex';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+</script>
+</html>

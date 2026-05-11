@@ -130,4 +130,4 @@ def health():
 
 if __name__ == "__main__":
     # Apenas para desenvolvimento. Em produção corre com gunicorn (ver Dockerfile).
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5050)
