@@ -4,6 +4,7 @@ O servidor armazena apenas blobs cifrados; nunca tem acesso ao plaintext.
 """
 import logging
 import os
+import threading
 import uuid
 from dataclasses import dataclass
 from typing import Final
@@ -59,6 +60,47 @@ db: Final[redis.Redis] = redis.Redis(
     decode_responses=True,
     socket_connect_timeout=2,
 )
+
+# ─── Redis Keyspace Notifications (log de expiração por TTL) ──────────────
+
+def _start_expiration_listener() -> None:
+    """Subscreve eventos de expiração do Redis numa thread daemon.
+
+    Requer notify-keyspace-events com pelo menos 'Ex'.
+    A config é aplicada automaticamente no arranque.
+    """
+    def _listen():
+        try:
+            # Ativa notificações de expiração (idempotente)
+            db.config_set("notify-keyspace-events", "Ex")
+            log.info("redis_keyspace_notifications enabled (Ex)")
+        except redis.RedisError as e:
+            log.warning("could not enable keyspace notifications: %s", e)
+            return
+
+        # Ligação dedicada para pub/sub (bloqueante)
+        pubsub = db.pubsub()
+        pubsub.subscribe("__keyevent@0__:expired")
+        log.info("expiration_listener started")
+
+        for message in pubsub.listen():
+            if message["type"] != "message":
+                continue
+            key = message["data"]
+            if isinstance(key, bytes):
+                key = key.decode("utf-8", errors="replace")
+
+            # Ignora chaves de metadata (meta:uuid) para não duplicar logs
+            if key.startswith("meta:"):
+                continue
+
+            log.info("secret_expired id=%s reason=ttl", key)
+
+    t = threading.Thread(target=_listen, name="redis-expiry-listener", daemon=True)
+    t.start()
+
+
+_start_expiration_listener()
 
 # ─── Endpoints ────────────────────────────────────────────────────────────
 
