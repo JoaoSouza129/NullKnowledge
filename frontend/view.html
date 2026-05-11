@@ -1,394 +1,442 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="pt"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>SecureShare — Ver Segredo</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        "colors": {
-          "primary-container": "#0f172a",
-          "on-secondary-fixed-variant": "#3c475a",
-          "primary-fixed-dim": "#bec6e0",
-          "surface": "#131315",
-          "on-error": "#690005",
-          "secondary": "#bcc7de",
-          "surface-bright": "#39393b",
-          "primary": "#bec6e0",
-          "on-tertiary-container": "#957d5a",
-          "tertiary-fixed": "#fcdeb5",
-          "inverse-on-surface": "#303032",
-          "on-tertiary-fixed-variant": "#574425",
-          "surface-container-high": "#2a2a2b",
-          "outline-variant": "#45464d",
-          "background": "#131315",
-          "on-tertiary": "#3e2d11",
-          "on-primary-fixed": "#131b2e",
-          "surface-container": "#1f1f21",
-          "on-background": "#e4e2e4",
-          "error-container": "#93000a",
-          "on-surface-variant": "#c6c6cd",
-          "on-secondary": "#263143",
-          "surface-variant": "#353436",
-          "surface-container-highest": "#353436",
-          "on-secondary-fixed": "#111c2d",
-          "tertiary-container": "#231500",
-          "inverse-surface": "#e4e2e4",
-          "inverse-primary": "#565e74",
-          "tertiary": "#dec29a",
-          "outline": "#909097",
-          "on-primary-fixed-variant": "#3f465c",
-          "secondary-fixed-dim": "#bcc7de",
-          "secondary-fixed": "#d8e3fb",
-          "on-tertiary-fixed": "#271901",
-          "on-primary-container": "#798098",
-          "error": "#ffb4ab",
-          "surface-tint": "#bec6e0",
-          "surface-container-low": "#1b1b1d",
-          "on-surface": "#e4e2e4",
-          "tertiary-fixed-dim": "#dec29a",
-          "surface-dim": "#131315",
-          "surface-container-lowest": "#0e0e10",
-          "primary-fixed": "#dae2fd",
-          "secondary-container": "#3e495d",
-          "on-secondary-container": "#aeb9d0",
-          "on-primary": "#283044",
-          "on-error-container": "#ffdad6"
-        },
-        "borderRadius": {
-          "DEFAULT": "0.125rem",
-          "lg": "0.25rem",
-          "xl": "0.5rem",
-          "full": "0.75rem"
-        },
-        "spacing": {
-          "md": "24px",
-          "xl": "80px",
-          "margin": "32px",
-          "xs": "4px",
-          "sm": "12px",
-          "base": "8px",
-          "lg": "48px",
-          "gutter": "24px"
-        },
-        "fontFamily": {
-          "h1": [
-            "Montserrat"
-          ],
-          "body-md": [
-            "Inter"
-          ],
-          "body-lg": [
-            "Inter"
-          ],
-          "h3": [
-            "Montserrat"
-          ],
-          "mono-label": [
-            "Space Grotesk"
-          ],
-          "h2": [
-            "Montserrat"
-          ],
-          "caption": [
-            "Inter"
-          ]
-        },
-        "fontSize": {
-          "h1": [
-            "48px",
-            {
-              "lineHeight": "1.1",
-              "letterSpacing": "-0.02em",
-              "fontWeight": "700"
-            }
-          ],
-          "body-md": [
-            "16px",
-            {
-              "lineHeight": "1.5",
-              "letterSpacing": "0em",
-              "fontWeight": "400"
-            }
-          ],
-          "body-lg": [
-            "18px",
-            {
-              "lineHeight": "1.6",
-              "letterSpacing": "0em",
-              "fontWeight": "400"
-            }
-          ],
-          "h3": [
-            "24px",
-            {
-              "lineHeight": "1.3",
-              "letterSpacing": "0em",
-              "fontWeight": "600"
-            }
-          ],
-          "mono-label": [
-            "14px",
-            {
-              "lineHeight": "1.2",
-              "letterSpacing": "0.1em",
-              "fontWeight": "600"
-            }
-          ],
-          "h2": [
-            "32px",
-            {
-              "lineHeight": "1.2",
-              "letterSpacing": "-0.01em",
-              "fontWeight": "600"
-            }
-          ],
-          "caption": [
-            "12px",
-            {
-              "lineHeight": "1.4",
-              "letterSpacing": "0.05em",
-              "fontWeight": "500"
-            }
-          ]
+<html class="dark" lang="pt">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SecureShare — Ver Segredo</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#0f172a",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "primary-fixed-dim": "#bec6e0",
+                        "surface": "#131315",
+                        "on-error": "#690005",
+                        "secondary": "#bcc7de",
+                        "surface-bright": "#39393b",
+                        "primary": "#bec6e0",
+                        "on-tertiary-container": "#957d5a",
+                        "tertiary-fixed": "#fcdeb5",
+                        "inverse-on-surface": "#303032",
+                        "on-tertiary-fixed-variant": "#574425",
+                        "surface-container-high": "#2a2a2b",
+                        "outline-variant": "#45464d",
+                        "background": "#131315",
+                        "on-tertiary": "#3e2d11",
+                        "on-primary-fixed": "#131b2e",
+                        "surface-container": "#1f1f21",
+                        "on-background": "#e4e2e4",
+                        "error-container": "#93000a",
+                        "on-surface-variant": "#c6c6cd",
+                        "on-secondary": "#263143",
+                        "surface-variant": "#353436",
+                        "surface-container-highest": "#353436",
+                        "on-secondary-fixed": "#111c2d",
+                        "tertiary-container": "#231500",
+                        "inverse-surface": "#e4e2e4",
+                        "inverse-primary": "#565e74",
+                        "tertiary": "#dec29a",
+                        "outline": "#909097",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-tertiary-fixed": "#271901",
+                        "on-primary-container": "#798098",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#bec6e0",
+                        "surface-container-low": "#1b1b1d",
+                        "on-surface": "#e4e2e4",
+                        "tertiary-fixed-dim": "#dec29a",
+                        "surface-dim": "#131315",
+                        "surface-container-lowest": "#0e0e10",
+                        "primary-fixed": "#dae2fd",
+                        "secondary-container": "#3e495d",
+                        "on-secondary-container": "#aeb9d0",
+                        "on-primary": "#283044",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "xl": "80px",
+                        "margin": "32px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "base": "8px",
+                        "lg": "48px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "h1": [
+                            "Montserrat"
+                        ],
+                        "body-md": [
+                            "Inter"
+                        ],
+                        "body-lg": [
+                            "Inter"
+                        ],
+                        "h3": [
+                            "Montserrat"
+                        ],
+                        "mono-label": [
+                            "Space Grotesk"
+                        ],
+                        "h2": [
+                            "Montserrat"
+                        ],
+                        "caption": [
+                            "Inter"
+                        ]
+                    },
+                    "fontSize": {
+                        "h1": [
+                            "48px",
+                            {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "body-md": [
+                            "16px",
+                            {
+                                "lineHeight": "1.5",
+                                "letterSpacing": "0em",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "body-lg": [
+                            "18px",
+                            {
+                                "lineHeight": "1.6",
+                                "letterSpacing": "0em",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "h3": [
+                            "24px",
+                            {
+                                "lineHeight": "1.3",
+                                "letterSpacing": "0em",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "mono-label": [
+                            "14px",
+                            {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "0.1em",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "h2": [
+                            "32px",
+                            {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "caption": [
+                            "12px",
+                            {
+                                "lineHeight": "1.4",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                            }
+                        ]
+                    }
+                },
+            },
         }
-      },
-    },
-  }
-      </script>
-<style>
-  body { background-color: #020617; }
-  .glass-panel {
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(34, 211, 238, 0.2);
-      box-shadow: 0 10px 25px -5px rgba(2, 6, 23, 0.8), 0 8px 10px -6px rgba(2, 6, 23, 0.8);
-  }
-  .glass-panel-active {
-      border: 1px solid rgba(34, 211, 238, 0.5);
-  }
-  .cyan-glow {
-      box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
-  }
-  .btn-primary {
-      background-color: #22d3ee;
-      color: #000000;
-      box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
-      transition: all 0.3s ease;
-  }
-  .btn-primary:hover:not(:disabled) {
-      box-shadow: 0 0 20px rgba(34, 211, 238, 0.8);
-      transform: translateY(-1px);
-  }
-  .btn-primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-  }
-  .btn-secondary {
-      background-color: transparent;
-      color: #22d3ee;
-      border: 1px solid #22d3ee;
-      transition: all 0.3s ease;
-  }
-  .btn-secondary:hover {
-      box-shadow: 0 0 10px rgba(34, 211, 238, 0.3) inset;
-  }
-  .input-glass {
-      background: rgba(19, 19, 21, 0.8);
-      border: none;
-      border-bottom: 1px solid rgba(144, 144, 151, 0.3);
-      color: #e4e2e4;
-  }
-  .input-glass:focus {
-      outline: none;
-      border-bottom: 1px solid #22d3ee;
-      box-shadow: 0 1px 0 0 #22d3ee;
-  }
-  ::-webkit-scrollbar {
-      width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-      background: rgba(19, 19, 21, 0.5);
-  }
-  ::-webkit-scrollbar-thumb {
-      background: rgba(34, 211, 238, 0.3);
-      border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-      background: rgba(34, 211, 238, 0.6);
-  }
+    </script>
+    <style>
+        body {
+            background-color: #020617;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            box-shadow: 0 10px 25px -5px rgba(2, 6, 23, 0.8), 0 8px 10px -6px rgba(2, 6, 23, 0.8);
+        }
+
+        .glass-panel-active {
+            border: 1px solid rgba(34, 211, 238, 0.5);
+        }
+
+        .cyan-glow {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+        }
+
+        .btn-primary {
+            background-color: #22d3ee;
+            color: #000000;
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.8);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #22d3ee;
+            border: 1px solid #22d3ee;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3) inset;
+        }
+
+        .input-glass {
+            background: rgba(19, 19, 21, 0.8);
+            border: none;
+            border-bottom: 1px solid rgba(144, 144, 151, 0.3);
+            color: #e4e2e4;
+        }
+
+        .input-glass:focus {
+            outline: none;
+            border-bottom: 1px solid #22d3ee;
+            box-shadow: 0 1px 0 0 #22d3ee;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(19, 19, 21, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(34, 211, 238, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(34, 211, 238, 0.6);
+        }
     </style>
 </head>
+
 <body class="text-on-surface min-h-screen flex flex-col font-body-md antialiased overflow-x-hidden">
-<header class="bg-surface/60 backdrop-blur-xl dark:bg-surface-dim/60 fixed top-0 w-full z-50 border-b border-primary/20 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-surface-container-lowest/50">
-<div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto w-full">
-<div class="flex items-center gap-4">
-<a class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface no-underline" href="index.html">SecureShare</a>
-</div>
-<div class="hidden md:flex gap-8 items-center">
-<a class="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-300" href="index.html">Novo Segredo</a>
-</div>
-<button class="active:scale-95 transition-transform btn-secondary font-mono-label text-mono-label px-4 py-2 rounded-DEFAULT flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
-    SEGURO
-      </button>
-</div>
-</header>
-
-<main class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col items-center justify-center gap-lg">
-<div class="w-full max-w-5xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative">
-<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80"></div>
-<div class="p-margin flex flex-col gap-6">
-<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
-<span class="material-symbols-outlined">enhanced_encryption</span>
-</div>
-<div>
-<h2 class="font-h3 text-h3 text-on-surface">Ver Segredo</h2>
-<p class="font-caption text-caption text-on-surface-variant font-mono">A chave fica apenas no teu browser</p>
-</div>
-</div>
-<div class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
-      AES-256-GCM
+    <header
+        class="bg-surface/60 backdrop-blur-xl dark:bg-surface-dim/60 fixed top-0 w-full z-50 border-b border-primary/20 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-surface-container-lowest/50">
+        <div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto w-full">
+            <div class="flex items-center gap-4">
+                <a class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface no-underline"
+                    href="index.html">SecureShare</a>
+            </div>
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="index.html">Novo Segredo</a>
+            </div>
+            <button
+                class="active:scale-95 transition-transform btn-secondary font-mono-label text-mono-label px-4 py-2 rounded-DEFAULT flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
+                SEGURO
+            </button>
         </div>
-</div>
+    </header>
 
-<div class="bg-surface-container-lowest/80 p-4 rounded-lg border border-outline-variant/20 font-mono-label text-caption text-on-surface-variant/80 break-all">
-        ID: <span id="secretId" class="text-primary"></span>
-    </div>
+    <main
+        class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col items-center justify-center gap-lg">
+        <div class="w-full max-w-5xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative">
+            <div
+                class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80">
+            </div>
+            <div class="p-margin flex flex-col gap-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
+                            <span class="material-symbols-outlined">enhanced_encryption</span>
+                        </div>
+                        <div>
+                            <h2 class="font-h3 text-h3 text-on-surface">Ver Segredo</h2>
+                            <p class="font-caption text-caption text-on-surface-variant font-mono">A chave fica apenas
+                                no teu browser</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
+                        AES-256-GCM
+                    </div>
+                </div>
 
-<div class="grid gap-6 lg:grid-cols-2">
-<div class="flex flex-col gap-3">
-<label class="font-mono-label text-mono-label text-on-surface">Conteúdo decifrado</label>
-<div class="relative flex-grow min-h-[280px]">
-<div class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
-<textarea id="secretContent" class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label" readonly placeholder="O segredo aparecerá aqui após a decifragem..."></textarea>
-</div>
-</div>
-</div>
+                <div
+                    class="bg-surface-container-lowest/80 p-4 rounded-lg border border-outline-variant/20 font-mono-label text-caption text-on-surface-variant/80 break-all">
+                    ID: <span id="secretId" class="text-primary"></span>
+                </div>
 
-<div class="flex flex-col gap-4">
-<div class="flex flex-col gap-3">
-<label class="font-mono-label text-mono-label text-on-surface">Estado</label>
-<div class="bg-surface-container-lowest/80 border border-cyan-400/30 rounded-DEFAULT p-4">
-<p id="statusText" class="font-body-md text-on-surface-variant">A preparar leitura segura...</p>
-</div>
-</div>
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <div class="flex flex-col gap-3">
+                        <label class="font-mono-label text-mono-label text-on-surface">Conteúdo decifrado</label>
+                        <div class="relative flex-grow min-h-[280px]">
+                            <div
+                                class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
+                                <textarea id="secretContent"
+                                    class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label"
+                                    readonly placeholder="O segredo aparecerá aqui após a decifragem..."></textarea>
+                            </div>
+                        </div>
+                    </div>
 
-<div class="flex flex-col gap-3">
-<label class="font-mono-label text-mono-label text-on-surface">Ações</label>
-<div class="flex flex-col sm:flex-row gap-2">
-<button id="copySecretBtn" class="btn-secondary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap" disabled>
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-          Copiar segredo
-      </button>
-<a class="btn-primary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap no-underline" href="index.html">
-<span class="material-symbols-outlined text-[18px]">lock</span>
-          Novo segredo
-      </a>
-</div>
-</div>
+                    <div class="flex flex-col gap-4">
+                        <div class="flex flex-col gap-3">
+                            <label class="font-mono-label text-mono-label text-on-surface">Estado</label>
+                            <div class="bg-surface-container-lowest/80 border border-cyan-400/30 rounded-DEFAULT p-4">
+                                <p id="statusText" class="font-body-md text-on-surface-variant">A preparar leitura
+                                    segura...</p>
+                            </div>
+                        </div>
 
-<div class="mt-2 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 flex items-start gap-3">
-<span class="material-symbols-outlined text-amber-400 text-[20px] mt-0.5">warning</span>
-<p class="font-caption text-caption text-amber-200/80">
-      Se este segredo tiver sido marcado como one-time, o backend pode removê-lo após a leitura.
-        </p>
-</div>
-</div>
-</div>
+                        <div class="flex flex-col gap-3">
+                            <label class="font-mono-label text-mono-label text-on-surface">Ações</label>
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <button id="copySecretBtn"
+                                    class="btn-secondary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap"
+                                    disabled>
+                                    <span class="material-symbols-outlined text-[18px]">content_copy</span>
+                                    Copiar segredo
+                                </button>
+                                <a class="btn-primary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap no-underline"
+                                    href="index.html">
+                                    <span class="material-symbols-outlined text-[18px]">lock</span>
+                                    Novo segredo
+                                </a>
+                            </div>
+                        </div>
 
-<div id="errorBox" class="hidden bg-error-container/20 border border-error/30 rounded-lg p-4 flex items-start gap-3">
-<span class="material-symbols-outlined text-error text-[20px] mt-0.5">error</span>
-<p id="errorText" class="font-body-md text-error/90"></p>
-</div>
-</div>
-</div>
-</main>
+                        <div
+                            class="mt-2 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 flex items-start gap-3">
+                            <span class="material-symbols-outlined text-amber-400 text-[20px] mt-0.5">warning</span>
+                            <p class="font-caption text-caption text-amber-200/80">
+                                Se este segredo tiver sido marcado como one-time, o backend pode removê-lo após a
+                                leitura.
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-lg border-t border-outline-variant/30 border-t border-white/5 flat mt-auto">
-<div class="flex flex-col md:flex-row justify-between items-center px-margin gap-base max-w-7xl mx-auto w-full">
-<div class="font-mono-label text-mono-label text-on-surface">
-    SecureShare © 2026 • Cifrado Zero-Knowledge
-      </div>
-<div class="flex gap-6">
-<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100" href="index.html">Novo Segredo</a>
-<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacidade</a>
-</div>
-</div>
-</footer>
+                <div id="errorBox"
+                    class="hidden bg-error-container/20 border border-error/30 rounded-lg p-4 flex items-start gap-3">
+                    <span class="material-symbols-outlined text-error text-[20px] mt-0.5">error</span>
+                    <p id="errorText" class="font-body-md text-error/90"></p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-<script src="crypto.js"></script>
-<script>
-    const API_BASE_URL = 'http://localhost:5050';
-    const params = new URLSearchParams(window.location.search);
-    const secretId = params.get('id');
-    const keyB64 = window.location.hash ? window.location.hash.slice(1) : '';
+    <footer
+        class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-lg border-t border-outline-variant/30 border-t border-white/5 flat mt-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center px-margin gap-base max-w-7xl mx-auto w-full">
+            <div class="font-mono-label text-mono-label text-on-surface">
+                SecureShare © 2026 • Cifrado Zero-Knowledge
+            </div>
+            <div class="flex gap-6">
+                <a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100"
+                    href="index.html">Novo Segredo</a>
+                <a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100"
+                    href="#">Privacidade</a>
+            </div>
+        </div>
+    </footer>
 
-    const secretIdEl = document.getElementById('secretId');
-    const secretContentEl = document.getElementById('secretContent');
-    const statusTextEl = document.getElementById('statusText');
-    const errorBox = document.getElementById('errorBox');
-    const errorText = document.getElementById('errorText');
-    const copySecretBtn = document.getElementById('copySecretBtn');
+    <script src="crypto.js"></script>
+    <script>
+        const API_BASE_URL = 'http://localhost:5050';
+        const params = new URLSearchParams(window.location.search);
+        const secretId = params.get('id');
+        const keyB64 = window.location.hash ? window.location.hash.slice(1) : '';
 
-    function showError(message) {
-      errorText.textContent = message;
-      errorBox.classList.remove('hidden');
-      statusTextEl.textContent = 'Falha ao abrir o segredo.';
-    }
+        const secretIdEl = document.getElementById('secretId');
+        const secretContentEl = document.getElementById('secretContent');
+        const statusTextEl = document.getElementById('statusText');
+        const errorBox = document.getElementById('errorBox');
+        const errorText = document.getElementById('errorText');
+        const copySecretBtn = document.getElementById('copySecretBtn');
 
-    async function loadSecret() {
-      if (!secretId) {
-  showError('Falta o parâmetro id no link.');
-  return;
-      }
+        function showError(message) {
+            errorText.textContent = message;
+            errorBox.classList.remove('hidden');
+            statusTextEl.textContent = 'Falha ao abrir o segredo.';
+        }
 
-      if (!keyB64) {
-  showError('Falta a chave no fragmento do link.');
-  return;
-      }
+        async function loadSecret() {
+            if (!secretId) {
+                showError('Falta o parâmetro id no link.');
+                return;
+            }
 
-      if (!window.SecureCrypto) {
-  showError('SecureCrypto não foi carregado. Verifica o ficheiro crypto.js.');
-  return;
-      }
+            if (!keyB64) {
+                showError('Falta a chave no fragmento do link.');
+                return;
+            }
 
-      secretIdEl.textContent = secretId;
-      statusTextEl.textContent = 'A ligar ao servidor e a decifrar localmente...';
+            if (!window.SecureCrypto) {
+                showError('SecureCrypto não foi carregado. Verifica o ficheiro crypto.js.');
+                return;
+            }
 
-      try {
-  const resp = await fetch(`${API_BASE_URL}/api/secrets/${encodeURIComponent(secretId)}`);
-  if (!resp.ok) {
-    throw new Error(`Servidor: ${resp.status}`);
-  }
+            secretIdEl.textContent = secretId;
+            statusTextEl.textContent = 'A ligar ao servidor e a decifrar localmente...';
 
-  const { content } = await resp.json();
-  const plaintext = await SecureCrypto.decryptText(content, keyB64);
+            try {
+                const resp = await fetch(`${API_BASE_URL}/api/secrets/${encodeURIComponent(secretId)}`);
+                if (!resp.ok) {
+                    throw new Error(`Servidor: ${resp.status}`);
+                }
 
-  secretContentEl.value = plaintext;
-  statusTextEl.textContent = 'Segredo decifrado com sucesso. O servidor nunca viu o texto em claro.';
-  copySecretBtn.disabled = false;
-      } catch (error) {
-  showError(`Erro: ${error.message}`);
-      }
-    }
+                const { content } = await resp.json();
+                const plaintext = await SecureCrypto.decryptText(content, keyB64);
 
-    copySecretBtn.addEventListener('click', async () => {
-      const value = secretContentEl.value;
-      if (!value) return;
-      await navigator.clipboard.writeText(value);
-      statusTextEl.textContent = 'Segredo copiado para a área de transferência.';
-    });
+                secretContentEl.value = plaintext;
+                statusTextEl.textContent = 'Segredo decifrado com sucesso. O servidor nunca viu o texto em claro.';
+                copySecretBtn.disabled = false;
+            } catch (error) {
+                showError(`Este link já não é válido. Foi usado anteriormente ou expirou.`);
+            }
+        }
 
-    loadSecret();
-</script>
+        copySecretBtn.addEventListener('click', async () => {
+            const value = secretContentEl.value;
+            if (!value) return;
+            await navigator.clipboard.writeText(value);
+            statusTextEl.textContent = 'Segredo copiado para a área de transferência.';
+        });
+
+        loadSecret();
+    </script>
+
 </html>

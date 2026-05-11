@@ -21,8 +21,8 @@ USER app
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-EXPOSE 5000
+EXPOSE 5050
 
 # Gunicorn: 4 workers sync. Ajustar via env em K8s se necessário.
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", \
+CMD ["gunicorn", "--bind", "0.0.0.0:5050", "--workers", "4", \
      "--access-logfile", "-", "--error-logfile", "-", "app:app"]
