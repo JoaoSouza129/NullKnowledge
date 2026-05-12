@@ -124,9 +124,9 @@ def create_secret():
 
     # Pipeline → uma única round-trip ao Redis
     pipe = db.pipeline()
-    pipe.setex(secret_id, ttl, content)
+    pipe.set(name=secret_id, value=content, ex=ttl)
     if one_time:
-        pipe.setex(f"meta:{secret_id}", ttl, "1")
+        pipe.set(name=f"meta:{secret_id}",value="1",ex=ttl)
     pipe.execute()
 
     log.info("secret_created id=%s ttl=%d one_time=%s", secret_id, ttl, one_time)
