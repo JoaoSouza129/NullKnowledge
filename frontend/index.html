@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>SecureShare — Novo Segredo</title>
+    <title>Amnesia Shh</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600&amp;display=swap"
@@ -260,9 +260,10 @@
     <header
         class="bg-surface/60 backdrop-blur-xl dark:bg-surface-dim/60 fixed top-0 w-full z-50 border-b border-primary/20 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-surface-container-lowest/50">
         <div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto w-full">
+            <!-- Logo -->
             <div class="flex items-center gap-4">
-                <span
-                    class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface">SecureShare</span>
+                <span class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface">Amnesia
+                    Shh</span>
             </div>
             <div class="hidden md:flex gap-8 items-center">
                 <a class="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-300"
@@ -278,6 +279,7 @@
     <!-- Main Content Canvas -->
     <main
         class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col items-center justify-center gap-lg">
+        <img src="/logo.png" alt="Logo" class="h-60 w-auto">
         <!-- Transmission Interface Container -->
         <div class="w-full max-w-5xl glass-panel rounded-xl overflow-hidden flex flex-col lg:flex-row">
             <!-- Left Panel: Payload Input -->
@@ -289,14 +291,14 @@
                     <h2 class="font-h3 text-h3 text-on-surface">Novo Segredo</h2>
                 </div>
                 <p class="font-body-md text-on-surface-variant/80">
-                    Cifrado no teu browser. O servidor nunca vê o conteúdo em claro.
+                    Encriptação end-to-end. O servidor nunca vê o conteúdo em claro.
                 </p>
                 <div class="relative flex-grow min-h-[300px]">
                     <div
                         class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
                         <textarea id="msg"
                             class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label"
-                            placeholder="Escreve aqui o teu segredo..."></textarea>
+                            placeholder="Escrever aqui o segredo..."></textarea>
                     </div>
                 </div>
             </div>
@@ -324,9 +326,9 @@
                     <div
                         class="flex items-center justify-between p-4 rounded-lg bg-surface-container-highest/20 border border-outline-variant/20">
                         <div class="flex flex-col">
-                            <span class="font-mono-label text-mono-label text-on-surface">Destruir após leitura</span>
-                            <span class="font-caption text-caption text-on-surface-variant">Remover após primeiro
-                                acesso</span>
+                            <span class="font-mono-label text-mono-label text-on-surface">Destruir o segredo após a
+                                leitura</span>
+
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input id="oneTime" checked="" class="sr-only peer" type="checkbox" value="" />
@@ -335,16 +337,17 @@
                             </div>
                         </label>
                     </div>
+                    <div class="mt-auto pt-6 border-t border-outline-variant/20">
+                        <button id="btnSend"
+                            class="w-full btn-primary font-mono-label text-mono-label py-4 rounded-DEFAULT flex items-center justify-center gap-2 uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-[20px]"
+                                style="font-variation-settings: 'FILL' 1;">lock_person</span>
+                            Gerar Link Seguro
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="mt-auto pt-6 border-t border-outline-variant/20">
-                <button id="btnSend"
-                    class="w-full btn-primary font-mono-label text-mono-label py-4 rounded-DEFAULT flex items-center justify-center gap-2 uppercase tracking-widest">
-                    <span class="material-symbols-outlined text-[20px]"
-                        style="font-variation-settings: 'FILL' 1;">lock_person</span>
-                    Gerar Link Seguro
-                </button>
-            </div>
+
         </div>
         </div>
         <!-- Result Panel -->
@@ -364,20 +367,19 @@
                             <span class="material-symbols-outlined">enhanced_encryption</span>
                         </div>
                         <div>
-                            <h2 class="font-h3 text-h3 text-on-surface">Segredo Cifrado</h2>
-                            <p class="font-caption text-caption text-on-surface-variant font-mono">Estado: Pronto para
+                            <h2 class="font-h3 text-h3 text-on-surface">Segredo Encriptado</h2>
+                            <p class="font-caption text-caption text-on-surface-variant font-mono">Pronto para
                                 partilha</p>
                         </div>
                     </div>
                     <div
                         class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
-                        AES-256-GCM
+                        AES-256
                     </div>
                 </div>
                 <!-- Shareable Link -->
                 <div class="flex flex-col gap-3">
-                    <label class="font-mono-label text-mono-label text-on-surface">Link de Partilha Seguro (a chave
-                        nunca foi enviada para o servidor)</label>
+                    <label class="font-mono-label text-mono-label text-on-surface">Link Seguro</label>
                     <div class="flex flex-col sm:flex-row gap-2">
                         <div
                             class="flex-grow bg-surface-container-lowest/80 border border-cyan-400/30 rounded-DEFAULT p-4 font-mono-label text-mono-label text-primary truncate overflow-auto">
@@ -395,8 +397,7 @@
                 <div class="mt-2 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 flex items-start gap-3">
                     <span class="material-symbols-outlined text-amber-400 text-[20px] mt-0.5">warning</span>
                     <p class="font-caption text-caption text-amber-200/80">
-                        Este link vai auto-destruir-se imediatamente após ser lido. Certifica-te que o destinatário está
-                        pronto antes de partilhar.
+                        Este link vai autodestruir-se imediatamente após ser lido.
                     </p>
                 </div>
             </div>
@@ -418,13 +419,7 @@
         class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-lg border-t border-outline-variant/30 border-t border-white/5 flat mt-auto">
         <div class="flex flex-col md:flex-row justify-between items-center px-margin gap-base max-w-7xl mx-auto w-full">
             <div class="font-mono-label text-mono-label text-on-surface">
-                SecureShare © 2026 • Cifrado Zero-Knowledge
-            </div>
-            <div class="flex gap-6">
-                <a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100"
-                    href="#">Privacidade</a>
-                <a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100"
-                    href="#">Segurança</a>
+                Amnesia Shh © 2026 • Encriptação End-to-end.
             </div>
         </div>
     </footer>

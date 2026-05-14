@@ -1,0 +1,78 @@
+services:
+  redis:
+    image: redis:7.4-alpine
+    container_name: amnesia-redis
+    command:
+      - redis-server
+      - --requirepass
+      - ${REDIS_PASSWORD}
+      - --appendonly
+      - "yes"
+      - --save
+      - "60 1"
+    environment:
+      - REDISCLI_AUTH=${REDIS_PASSWORD}    # para o healthcheck usar AUTH transparente
+    volumes:
+      - redis-data:/data                    # persistência AOF/RDB
+    networks:
+      - amnesia-shh-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  backend:
+    build: ./backend
+    image: amnesia-shh-backend:v1.0.0
+    container_name: amnesia-shh-backend
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - MAX_SECRET_BYTES=10000
+      - MAX_TTL_SECONDS=604800
+      - LOG_LEVEL=INFO
+      - ALLOWED_ORIGIN=*
+    networks:
+      - amnesia-shh-net
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy           # só arranca quando o Redis responder a PING
+    healthcheck:
+      test:
+        - "CMD"
+        - "python"
+        - "-c"
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:5050/healthz', timeout=2).status == 200 else 1)"
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build: ./frontend
+    image: amnesia-shh-frontend:v1.0.0
+    container_name: amnesia-shh-frontend
+    environment:
+      - BACKEND_HOST=backend                 # nome DNS interno da network
+      - BACKEND_PORT=5050
+    ports:
+      - "8080:80"                            # único porto exposto ao host
+    networks:
+      - amnesia-shh-net
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  amnesia-shh-net:
+    driver: bridge

@@ -30,7 +30,7 @@ class Config:
         return cls(
             redis_host=os.getenv("REDIS_HOST", "localhost"),
             redis_port=int(os.getenv("REDIS_PORT", "6379")),
-            redis_password=os.getenv("REDIS_PASSWORD") or None,
+            redis_password=os.getenv("REDIS_PASSWORD"), # or None
             max_secret_bytes=int(os.getenv("MAX_SECRET_BYTES", "10000")),   # ~10 KB cifrado
             max_ttl_seconds=int(os.getenv("MAX_TTL_SECONDS", "604800")),    # 7 dias
             allowed_origin=os.getenv("ALLOWED_ORIGIN", "*"),

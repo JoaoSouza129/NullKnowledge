@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>SecureShare — Ver Segredo</title>
+    <title>Amnesia Shh</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600&amp;display=swap"
@@ -255,7 +255,7 @@
         <div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto w-full">
             <div class="flex items-center gap-4">
                 <a class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface no-underline"
-                    href="index.html">SecureShare</a>
+                    href="index.html">Amnesia Shh</a>
             </div>
             <div class="hidden md:flex gap-8 items-center">
                 <a class="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-300"
@@ -269,30 +269,30 @@
         </div>
     </header>
 
-    <main
-        class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col items-center justify-center gap-lg">
-        <div class="w-full max-w-5xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative">
-            <div
-                class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80">
-            </div>
-            <div class="p-margin flex flex-col gap-6">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
-                            <span class="material-symbols-outlined">enhanced_encryption</span>
-                        </div>
-                        <div>
-                            <h2 class="font-h3 text-h3 text-on-surface">Ver Segredo</h2>
-                            <p class="font-caption text-caption text-on-surface-variant font-mono">A chave fica apenas
-                                no teu browser</p>
-                        </div>
+<main class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-center gap-12">
+    
+    <div class="flex-shrink-0">
+        <img src="/logo.png" alt="Logo" class="h-80 lg:h-100 w-auto">
+    </div>
+
+    <div class="w-full max-w-4xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative flex-grow">
+        
+        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80"></div>
+        
+        <div class="p-margin flex flex-col gap-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
+                        <span class="material-symbols-outlined">enhanced_encryption</span>
                     </div>
-                    <div
-                        class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
-                        AES-256-GCM
+                    <div>
+                        <h2 class="font-h3 text-h3 text-on-surface">Ver Segredo</h2>
                     </div>
                 </div>
+                <div class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
+                    AES-256
+                </div>
+            </div>
 
                 <div
                     class="bg-surface-container-lowest/80 p-4 rounded-lg border border-outline-variant/20 font-mono-label text-caption text-on-surface-variant/80 break-all">
@@ -301,13 +301,13 @@
 
                 <div class="grid gap-6 lg:grid-cols-2">
                     <div class="flex flex-col gap-3">
-                        <label class="font-mono-label text-mono-label text-on-surface">Conteúdo decifrado</label>
+                        <label class="font-mono-label text-mono-label text-on-surface">Conteúdo desencriptado</label>
                         <div class="relative flex-grow min-h-[280px]">
                             <div
                                 class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
                                 <textarea id="secretContent"
                                     class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label"
-                                    readonly placeholder="O segredo aparecerá aqui após a decifragem..."></textarea>
+                                    readonly placeholder="O segredo vai aparecer aqui quando for desencriptado..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -337,15 +337,6 @@
                                 </a>
                             </div>
                         </div>
-
-                        <div
-                            class="mt-2 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 flex items-start gap-3">
-                            <span class="material-symbols-outlined text-amber-400 text-[20px] mt-0.5">warning</span>
-                            <p class="font-caption text-caption text-amber-200/80">
-                                Se este segredo tiver sido marcado como one-time, o backend pode removê-lo após a
-                                leitura.
-                            </p>
-                        </div>
                     </div>
                 </div>
 
@@ -362,13 +353,7 @@
         class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-lg border-t border-outline-variant/30 border-t border-white/5 flat mt-auto">
         <div class="flex flex-col md:flex-row justify-between items-center px-margin gap-base max-w-7xl mx-auto w-full">
             <div class="font-mono-label text-mono-label text-on-surface">
-                SecureShare © 2026 • Cifrado Zero-Knowledge
-            </div>
-            <div class="flex gap-6">
-                <a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100"
-                    href="index.html">Novo Segredo</a>
-                <a class="font-caption text-caption text-on-surface-variant hover:text-on-surface hover:text-primary transition-colors opacity-80 hover:opacity-100"
-                    href="#">Privacidade</a>
+                Amnesia Shh © 2026 • Encriptação End-to-end.
             </div>
         </div>
     </footer>
@@ -395,7 +380,7 @@
 
         async function loadSecret() {
             if (!secretId) {
-                showError('Falta o parâmetro id no link.');
+                showError('Falta o id no link.');
                 return;
             }
 
@@ -422,7 +407,7 @@
                 const plaintext = await SecureCrypto.decryptText(content, keyB64);
 
                 secretContentEl.value = plaintext;
-                statusTextEl.textContent = 'Segredo decifrado com sucesso. O servidor nunca viu o texto em claro.';
+                statusTextEl.textContent = 'Segredo decifrado com sucesso.';
                 copySecretBtn.disabled = false;
             } catch (error) {
                 showError(`Este link já não é válido. Foi usado anteriormente ou expirou.`);
