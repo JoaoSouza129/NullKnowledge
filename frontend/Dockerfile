@@ -1,7 +1,7 @@
 FROM nginx:1.27-alpine
 
 # Assets estáticos
-COPY index.html view.html crypto.js script.js /usr/share/nginx/html/
+COPY index.html view.html crypto.js script.js logo.png /usr/share/nginx/html/
 
 # Template processado por envsubst no arranque
 COPY nginx.conf /etc/nginx/templates/default.conf
