@@ -11,9 +11,9 @@ services:
       - --save
       - "60 1"
     environment:
-      - REDISCLI_AUTH=${REDIS_PASSWORD}    # para o healthcheck usar AUTH transparente
+      - REDISCLI_AUTH=${REDIS_PASSWORD}
     volumes:
-      - redis-data:/data                    # persistência AOF/RDB
+      - redis-data:/data
     networks:
       - amnesia-shh-net
     restart: unless-stopped
@@ -28,8 +28,6 @@ services:
     build: ./backend
     image: amnesia-shh-backend:v1.0.0
     container_name: amnesia-shh-backend
-    #ports:
-    #  - "5050:5050"
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -40,10 +38,11 @@ services:
       - ALLOWED_ORIGIN=*
     networks:
       - amnesia-shh-net
+      - proxy-network       # <-- ADICIONADO
     restart: unless-stopped
     depends_on:
       redis:
-        condition: service_healthy           # só arranca quando o Redis responder a PING
+        condition: service_healthy
     healthcheck:
       test:
         - "CMD"
@@ -55,18 +54,16 @@ services:
       retries: 3
       start_period: 10s
 
-
   frontend:
     build: ./frontend
     image: amnesia-shh-frontend:v1.0.0
     container_name: amnesia-shh-frontend
     environment:
-      - BACKEND_HOST=backend                 # nome DNS interno da network
+      - BACKEND_HOST=backend
       - BACKEND_PORT=5050
-    #ports:
-    #  - "8080:80"                            # único porto exposto ao host
     networks:
       - amnesia-shh-net
+      - proxy-network       # <-- ADICIONADO
     restart: unless-stopped
     depends_on:
       backend:
@@ -79,3 +76,5 @@ volumes:
 networks:
   amnesia-shh-net:
     driver: bridge
+  proxy-network:            # <-- CORRIGIDO O ERRO DE SINTAXE AQUI
+    external: true
