@@ -3,8 +3,8 @@ FROM nginx:1.27-alpine
 # Assets estáticos
 COPY index.html view.html crypto.js script.js logo.png /usr/share/nginx/html/
 
-# Template processado por envsubst no arranque
-COPY nginx.conf /etc/nginx/templates/default.conf
+# CORREÇÃO: Adicionada a extensão .template obrigatória para o Docker ativar o envsubst
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 
 # Defaults (sobrepostos pelo Compose/K8s)
 ENV BACKEND_HOST=backend \

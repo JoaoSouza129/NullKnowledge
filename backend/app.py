@@ -6,7 +6,6 @@ import logging
 import os
 import threading
 import secrets  # Substituído uuid por secrets
-import uvicorn  # Caso uses para o startup
 from dataclasses import dataclass
 from typing import Final
 
