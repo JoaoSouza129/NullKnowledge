@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://localhost:5050';
+// Alterado para vazio para herdar nativamente o domínio HTTPS do NPM
+const API_BASE_URL = ''; 
+
 const btn = document.getElementById('btnSend');
 btn.addEventListener('click', async () => {
     btn.disabled = true;
@@ -18,7 +20,7 @@ btn.addEventListener('click', async () => {
         // 2. Cifra o conteúdo
         const ciphertext = await SecureCrypto.encryptText(text, keyB64);
 
-        // 3. Envia APENAS o blob cifrado
+        // 3. Envia APENAS o blob cifrado usando a rota relativa
         const resp = await fetch(`${API_BASE_URL}/api/secrets`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -31,8 +33,10 @@ btn.addEventListener('click', async () => {
         if (!resp.ok) throw new Error(`Servidor: ${resp.status}`);
         const { id } = await resp.json();
 
-        // 4. Constrói o link com a chave APÓS o # (nunca chega ao servidor)
-        const url = new URL(`view.html?id=${id}#${keyB64}`, window.location.href).href;
+        // 4. Constrói o link com encodeURIComponent para proteger o Base64 na hash (#)
+        const safeKey = encodeURIComponent(keyB64);
+        const url = new URL(`view.html?id=${id}#${safeKey}`, window.location.href).href;
+        
         document.getElementById('link').value = url;
         resultBox.style.display = 'flex';
     } catch (e) {
