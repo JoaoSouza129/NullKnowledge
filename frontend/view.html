@@ -269,30 +269,36 @@
         </div>
     </header>
 
-<main class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-center gap-12">
-    
-    <div class="flex-shrink-0">
-        <img src="logo.png" alt="Logo" class="h-80 lg:h-100 w-auto">
-    </div>
+    <main
+        class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-center gap-12">
 
-    <div class="w-full max-w-4xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative flex-grow">
-        
-        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80"></div>
-        
-        <div class="p-margin flex flex-col gap-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
-                        <span class="material-symbols-outlined">enhanced_encryption</span>
-                    </div>
-                    <div>
-                        <h2 class="font-h3 text-h3 text-on-surface">Ver Segredo</h2>
-                    </div>
-                </div>
-                <div class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
-                    AES-256
-                </div>
+        <div class="flex-shrink-0">
+            <img src="logo.png" alt="Logo" class="h-80 lg:h-100 w-auto">
+        </div>
+
+        <div
+            class="w-full max-w-4xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative flex-grow">
+
+            <div
+                class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80">
             </div>
+
+            <div class="p-margin flex flex-col gap-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
+                            <span class="material-symbols-outlined">enhanced_encryption</span>
+                        </div>
+                        <div>
+                            <h2 class="font-h3 text-h3 text-on-surface">Ver Segredo</h2>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
+                        AES-256
+                    </div>
+                </div>
 
                 <div
                     class="bg-surface-container-lowest/80 p-4 rounded-lg border border-outline-variant/20 font-mono-label text-caption text-on-surface-variant/80 break-all">
@@ -307,7 +313,8 @@
                                 class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
                                 <textarea id="secretContent"
                                     class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label"
-                                    readonly placeholder="O segredo vai aparecer aqui quando for desencriptado..."></textarea>
+                                    readonly
+                                    placeholder="O segredo vai aparecer aqui quando for desencriptado..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -358,13 +365,13 @@
         </div>
     </footer>
 
-<script src="crypto.js"></script>
+    <script src="crypto.js"></script>
     <script>
         // 1. Alterado para vazio para herdar nativamente o domínio HTTPS do NPM
-        const API_BASE_URL = ''; 
+        const API_BASE_URL = '';
         const params = new URLSearchParams(window.location.search);
         const secretId = params.get('id');
-        
+
         // 2. CORREÇÃO: Aplica decodeURIComponent para recuperar o Base64 puro da chave
         const rawHash = window.location.hash ? window.location.hash.slice(1) : '';
         const keyB64 = decodeURIComponent(rawHash);
@@ -402,7 +409,7 @@
             statusTextEl.textContent = 'A ligar ao servidor e a decifrar localmente...';
 
             try {
-                // 3. CORREÇÃO: Usa o URL relativo e passa o secretId direto (UUID não precisa de urlencode)
+                // CORREÇÃO: Remove o encodeURIComponent. Passa o UUID limpo na string interpolation.
                 const resp = await fetch(`${API_BASE_URL}/api/secrets/${secretId}`);
                 if (!resp.ok) {
                     throw new Error(`Servidor: ${resp.status}`);
@@ -418,14 +425,6 @@
                 showError(`Este link já não é válido. Foi usado anteriormente ou expirou.`);
             }
         }
-
-        copySecretBtn.addEventListener('click', async () => {
-            const value = secretContentEl.value;
-            if (!value) return;
-            await navigator.clipboard.writeText(value);
-            statusTextEl.textContent = 'Segredo copiado para a área de transferência.';
-        });
-
         loadSecret();
     </script>
 
