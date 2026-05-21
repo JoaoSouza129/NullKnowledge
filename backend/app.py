@@ -146,8 +146,14 @@ def read_secret(secret_id: str):
 
     if is_one_time:
         # GETDEL → operação ATÓMICA. Resolve a race condition.
-        content = db.execute_command("GETDEL", secret_id)
+        raw_content = db.execute_command("GETDEL", secret_id)
         db.delete(f"meta:{secret_id}")
+        
+        # Garante que se o Redis devolver bytes, convertemos para string
+        if isinstance(raw_content, bytes):
+            content = raw_content.decode('utf-8')
+        else:
+            content = raw_content
     else:
         content = db.get(secret_id)
 

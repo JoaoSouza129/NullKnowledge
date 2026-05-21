@@ -358,12 +358,16 @@
         </div>
     </footer>
 
-    <script src="crypto.js"></script>
+<script src="crypto.js"></script>
     <script>
-        const API_BASE_URL = 'http://localhost:5050';
+        // 1. Alterado para vazio para herdar nativamente o domínio HTTPS do NPM
+        const API_BASE_URL = ''; 
         const params = new URLSearchParams(window.location.search);
         const secretId = params.get('id');
-        const keyB64 = window.location.hash ? window.location.hash.slice(1) : '';
+        
+        // 2. CORREÇÃO: Aplica decodeURIComponent para recuperar o Base64 puro da chave
+        const rawHash = window.location.hash ? window.location.hash.slice(1) : '';
+        const keyB64 = decodeURIComponent(rawHash);
 
         const secretIdEl = document.getElementById('secretId');
         const secretContentEl = document.getElementById('secretContent');
@@ -398,7 +402,8 @@
             statusTextEl.textContent = 'A ligar ao servidor e a decifrar localmente...';
 
             try {
-                const resp = await fetch(`${API_BASE_URL}/api/secrets/${encodeURIComponent(secretId)}`);
+                // 3. CORREÇÃO: Usa o URL relativo e passa o secretId direto (UUID não precisa de urlencode)
+                const resp = await fetch(`${API_BASE_URL}/api/secrets/${secretId}`);
                 if (!resp.ok) {
                     throw new Error(`Servidor: ${resp.status}`);
                 }
