@@ -367,12 +367,13 @@
 
     <script src="crypto.js"></script>
     <script>
-        // 1. Alterado para vazio para herdar nativamente o domínio HTTPS do NPM
-        const API_BASE_URL = '';
-        const params = new URLSearchParams(window.location.search);
-        const secretId = params.get('id');
-
-        // 2. CORREÇÃO: Aplica decodeURIComponent para recuperar o Base64 puro da chave
+        const API_BASE_URL = ''; 
+        
+        // ALTERAÇÃO: Extrai o Short ID diretamente do pathname (/v/k8J2f9mS -> k8J2f9mS)
+        const pathParts = window.location.pathname.split('/');
+        const vIndex = pathParts.indexOf('v');
+        const secretId = vIndex !== -1 && pathParts[vIndex + 1] ? pathParts[vIndex + 1] : null;
+        
         const rawHash = window.location.hash ? window.location.hash.slice(1) : '';
         const keyB64 = decodeURIComponent(rawHash);
 
@@ -401,7 +402,7 @@
             }
 
             if (!window.SecureCrypto) {
-                showError('SecureCrypto não foi carregado. Verifica o ficheiro crypto.js.');
+                showError('SecureCrypto não foi carregado.');
                 return;
             }
 
@@ -409,7 +410,7 @@
             statusTextEl.textContent = 'A ligar ao servidor e a decifrar localmente...';
 
             try {
-                // CORREÇÃO: Remove o encodeURIComponent. Passa o UUID limpo na string interpolation.
+                // Pedido feito à rota relativa, usando o Short ID limpo
                 const resp = await fetch(`${API_BASE_URL}/api/secrets/${secretId}`);
                 if (!resp.ok) {
                     throw new Error(`Servidor: ${resp.status}`);
@@ -425,6 +426,14 @@
                 showError(`Este link já não é válido. Foi usado anteriormente ou expirou.`);
             }
         }
+
+        copySecretBtn.addEventListener('click', async () => {
+            const value = secretContentEl.value;
+            if (!value) return;
+            await navigator.clipboard.writeText(value);
+            statusTextEl.textContent = 'Segredo copiado para a área de transferência.';
+        });
+
         loadSecret();
     </script>
 
