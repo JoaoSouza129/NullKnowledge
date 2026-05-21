@@ -28,8 +28,8 @@ services:
     build: ./backend
     image: amnesia-shh-backend:v1.0.0
     container_name: amnesia-shh-backend
-    ports:
-    - "5050:5050"
+    #ports:
+    #  - "5050:5050"
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -63,8 +63,8 @@ services:
     environment:
       - BACKEND_HOST=backend                 # nome DNS interno da network
       - BACKEND_PORT=5050
-    ports:
-      - "8080:80"                            # único porto exposto ao host
+    #ports:
+    #  - "8080:80"                            # único porto exposto ao host
     networks:
       - amnesia-shh-net
     restart: unless-stopped
