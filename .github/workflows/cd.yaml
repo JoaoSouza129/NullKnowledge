@@ -1,0 +1,45 @@
+name: CD — Update Manifests
+
+on:
+  workflow_run:
+    workflows: ["CI — Build & Push"]
+    types: [completed]
+    branches: [deploy]
+
+env:
+  BACKEND_IMAGE: ghcr.io/${{ github.repository_owner }}/amnesia-shh-backend
+  FRONTEND_IMAGE: ghcr.io/${{ github.repository_owner }}/amnesia-shh-frontend
+
+jobs:
+  update-manifests:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: deploy
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Obter SHA do commit
+        id: sha
+        run: echo "SHORT_SHA=$(echo ${{ github.event.workflow_run.head_sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+
+      - name: Atualizar tag no manifesto do backend
+        run: |
+          sed -i "s|image: .*amnesia-shh-backend.*|image: ${{ env.BACKEND_IMAGE }}:sha-${{ steps.sha.outputs.SHORT_SHA }}|g" k8s/backend/deployment.yaml
+
+      - name: Atualizar tag no manifesto do frontend
+        run: |
+          sed -i "s|image: .*amnesia-shh-frontend.*|image: ${{ env.FRONTEND_IMAGE }}:sha-${{ steps.sha.outputs.SHORT_SHA }}|g" k8s/frontend/deployment.yaml
+
+      - name: Commit e push dos manifestos atualizados
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add k8s/backend/deployment.yaml k8s/frontend/deployment.yaml
+          git diff --staged --quiet || git commit -m "ci: update images to sha-${{ steps.sha.outputs.SHORT_SHA }}"
+          git push origin deploy
