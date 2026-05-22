@@ -3,7 +3,7 @@ resource "null_resource" "k3s_setup" {
     type        = "ssh"
     host        = var.droplet_ip
     user        = var.ssh_user
-    private_key = file(var.ssh_private_key_path)
+    private_key = file(pathexpand(var.ssh_private_key_path))
     timeout     = "5m"
   }
 
