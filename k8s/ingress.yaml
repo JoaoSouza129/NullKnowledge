@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: amnesia-ingress
+  namespace: amnesia-shh
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - amnesia-shh.duckdns.org
+    secretName: amnesia-tls
+  rules:
+  - host: amnesia-shh.duckdns.org
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 5050
+      - path: /healthz
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 5050
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 80
