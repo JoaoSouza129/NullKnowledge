@@ -1,5 +1,5 @@
 // Alterado para vazio para herdar nativamente o domínio HTTPS do NPM
-const API_BASE_URL = ''; 
+const API_BASE_URL = '';
 
 const btn = document.getElementById('btnSend');
 btn.addEventListener('click', async () => {
@@ -33,10 +33,10 @@ btn.addEventListener('click', async () => {
         if (!resp.ok) throw new Error(`Servidor: ${resp.status}`);
         const { id } = await resp.json();
 
-        // 4. Constrói o link com encodeURIComponent para proteger o Base64 na hash (#)
+        // ALTERAÇÃO: Constrói o link estético usando o Clean URL (/v/id)
         const safeKey = encodeURIComponent(keyB64);
-        const url = new URL(`view.html?id=${id}#${safeKey}`, window.location.href).href;
-        
+        const url = new URL(`v/${id}#${safeKey}`, window.location.href).href;
+
         document.getElementById('link').value = url;
         resultBox.style.display = 'flex';
     } catch (e) {
@@ -46,3 +46,4 @@ btn.addEventListener('click', async () => {
         btn.disabled = false;
     }
 });
+

@@ -1,15 +1,13 @@
 FROM nginx:1.27-alpine
 
-# Assets estáticos
 COPY index.html view.html crypto.js script.js logo.png /usr/share/nginx/html/
+COPY nginx.conf /etc/nginx/nginx.conf.template
 
-# Template processado por envsubst no arranque
-COPY nginx.conf /etc/nginx/templates/default.conf
-
-# Defaults (sobrepostos pelo Compose/K8s)
 ENV BACKEND_HOST=backend \
-    BACKEND_PORT=5050 \
-    NGINX_ENVSUBST_FILTER=^(BACKEND_HOST|BACKEND_PORT)$
+    BACKEND_PORT=5050
 
 EXPOSE 80
-# CMD herdado da imagem base (nginx -g "daemon off;")
+
+# Substitui APENAS ${BACKEND_HOST} e ${BACKEND_PORT}, preservando $host, $uri, etc.
+CMD ["/bin/sh", "-c", \
+    "envsubst '${BACKEND_HOST} ${BACKEND_PORT}' < /etc/nginx/nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]

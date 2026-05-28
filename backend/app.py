@@ -5,7 +5,7 @@ O servidor armazena apenas blobs cifrados; nunca tem acesso ao plaintext.
 import logging
 import os
 import threading
-import uuid
+import secrets  # Substituído uuid por secrets
 from dataclasses import dataclass
 from typing import Final
 
@@ -106,27 +106,31 @@ _start_expiration_listener()
 
 @app.route("/api/secrets", methods=["POST"])
 def create_secret():
-    """Recebe um blob já cifrado pelo cliente e devolve o seu ID."""
-    data = request.get_json(silent=True) or {}
-    content = data.get("content")
-    ttl = data.get("ttl")
-    one_time = bool(data.get("one_time", False))
+    """Recebe o blob cifrado e armazena-o sob um Short ID gerado de forma segura."""
+    data = request.get_json()
+    if not data or "content" not in data:
+        return jsonify({"error": "missing content"}), 400
 
-    # Validação no servidor — NUNCA confiar só no cliente
-    if not isinstance(content, str) or not content:
-        return jsonify({"error": "content required"}), 400
+    content = data["content"]
     if len(content.encode("utf-8")) > CONFIG.max_secret_bytes:
-        return jsonify({"error": "content too large"}), 413
-    if not isinstance(ttl, int) or ttl <= 0 or ttl > CONFIG.max_ttl_seconds:
-        return jsonify({"error": f"ttl must be 1..{CONFIG.max_ttl_seconds}"}), 400
+        return jsonify({"error": "secret too large"}), 413
 
-    secret_id = str(uuid.uuid4())
+    ttl = data.get("ttl", 3600)
+    try:
+        ttl = int(ttl)
+        if ttl <= 0 or ttl > CONFIG.max_ttl_seconds:
+            ttl = CONFIG.max_ttl_seconds
+    except ValueError:
+        ttl = 3600
 
-    # Pipeline → uma única round-trip ao Redis
+    one_time = bool(data.get("one_time", True))
+
+    # ALTERAÇÃO: Geração de Short ID seguro (12 caracteres alfanuméricos/símbolos seguros)
+    secret_id = secrets.token_urlsafe(9)
+
     pipe = db.pipeline()
     pipe.set(name=secret_id, value=content, ex=ttl)
-    if one_time:
-        pipe.set(name=f"meta:{secret_id}",value="1",ex=ttl)
+    pipe.set(name=f"meta:{secret_id}", value="1" if one_time else "0", ex=ttl)
     pipe.execute()
 
     log.info("secret_created id=%s ttl=%d one_time=%s", secret_id, ttl, one_time)
@@ -136,20 +140,18 @@ def create_secret():
 @app.route("/api/secrets/<secret_id>", methods=["GET"])
 def read_secret(secret_id: str):
     """Devolve o blob cifrado; apaga atomicamente se for one-time."""
-    # Validação do formato (evita queries Redis com input arbitrário)
-    try:
-        uuid.UUID(secret_id)
-    except ValueError:
-        return jsonify({"error": "invalid id"}), 400
+    
+    # ALTERAÇÃO: Validação de segurança para Short IDs (apenas alfanuméricos, hífen e underscore)
+    # Impede caracteres maliciosos de subirem para o Redis
+    if not secret_id.isalnum() and not any(c in secret_id for c in ["-", "_"]):
+        return jsonify({"error": "invalid id format"}), 400
 
     is_one_time = db.get(f"meta:{secret_id}") == "1"
 
     if is_one_time:
-        # GETDEL → operação ATÓMICA. Resolve a race condition.
         raw_content = db.execute_command("GETDEL", secret_id)
         db.delete(f"meta:{secret_id}")
         
-        # Garante que se o Redis devolver bytes, convertemos para string
         if isinstance(raw_content, bytes):
             content = raw_content.decode('utf-8')
         else:
