@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ghcr.io/JoaoSouza129/amnesia-shh-backend:sha-a76e762
+        image: ghcr.io/JoaoSouza129/amnesia-shh-backend:sha-cff23a0
         ports:
         - containerPort: 5050
         envFrom:
