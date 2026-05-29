@@ -30,11 +30,11 @@ jobs:
 
       - name: Atualizar tag no manifesto do backend
         run: |
-          sed -i "s|image: .*amnesia-shh-backend.*|image: ${{ env.BACKEND_IMAGE }}:sha-${{ steps.sha.outputs.SHORT_SHA }}|g" k8s/backend/deployment.yaml
+          sed -i "s|image: .*amnesia-shh-backend.*|image: ghcr.io/joaosouza129/amnesia-shh-backend:sha-${{ steps.sha.outputs.SHORT_SHA }}|g" k8s/backend/deployment.yaml
 
       - name: Atualizar tag no manifesto do frontend
         run: |
-          sed -i "s|image: .*amnesia-shh-frontend.*|image: ${{ env.FRONTEND_IMAGE }}:sha-${{ steps.sha.outputs.SHORT_SHA }}|g" k8s/frontend/deployment.yaml
+          sed -i "s|image: .*amnesia-shh-frontend.*|image: ghcr.io/joaosouza129/amnesia-shh-frontend:sha-${{ steps.sha.outputs.SHORT_SHA }}|g" k8s/frontend/deployment.yaml
 
       - name: Commit e push dos manifestos atualizados
         run: |
