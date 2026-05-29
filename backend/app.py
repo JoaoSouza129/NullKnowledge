@@ -67,6 +67,10 @@ class Server():
 
 # ─── Inicialização do Servidor ────────────────────────────────────────────
 server = Server()
+
+# [CORREÇÃO 1]: Expor a instância do Flask globalmente para o Gunicorn a encontrar ("app:app")
+app = server.app  
+
 db: Final[redis.Redis] = redis.Redis(
     host=CONFIG.redis_host,
     port=CONFIG.redis_port,
@@ -120,7 +124,10 @@ _start_expiration_listener()
 api = server.api
 
 ns_secrets = Namespace('secrets', description='Operações de gestão de segredos')
-ns_health = Namespace('health', description='Status da aplicação')
+
+# [CORREÇÃO 2]: Adicionado path='/' para que o endpoint fique na raiz (/healthz) 
+# e não sob o prefixo do namespace (/health/healthz).
+ns_health = Namespace('health', path='/', description='Status da aplicação')
 
 # Modelos de Request/Response
 secret_create_model = api.model('SecretCreate', {
@@ -225,7 +232,9 @@ class SecretsDetail(Resource):
 
 
 # ─── Endpoints de Status ──────────────────────────────────────────────────
-@ns_health.route('/healtz')
+
+# [CORREÇÃO 3]: Corrigido o typo de '/healtz' para '/healthz', que é o que o K8s espera.
+@ns_health.route('/healthz')
 class HealthReadiness(Resource):
     @ns_health.doc('healthz')
     @ns_health.response(200, 'Serviço pronto', health_response)
@@ -238,10 +247,6 @@ class HealthReadiness(Resource):
         except redis.RedisError as e:
             log.warning("health_check_failed: %s", e)
             return {"status": "unavailable"}, 503
-
-
-
-
 
 if __name__ == "__main__":
     server.run()
