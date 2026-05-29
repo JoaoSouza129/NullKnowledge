@@ -16,6 +16,13 @@ spec:
   - host: amnesia-shh.duckdns.org
     http:
       paths:
+      - path: /docs
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 5050
       - path: /api
         pathType: Prefix
         backend:
