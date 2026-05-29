@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: ghcr.io/joaosouza129/amnesia-shh-frontend:sha-1b0c76a
+        image: ghcr.io/joaosouza129/amnesia-shh-frontend:sha-e033a51
         ports:
         - containerPort: 80
         env:
