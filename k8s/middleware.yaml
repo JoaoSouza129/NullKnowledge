@@ -14,4 +14,5 @@ spec:
     permissionsPolicy: "geolocation=(), microphone=(), camera=()"
     customResponseHeaders:
       Cross-Origin-Embedder-Policy: "require-corp"
-      Content-Security-Policy: "default-src 'self'; script-src 'self' https://cdn.tailwindcss.com; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://amnesia-shh.duckdns.org;"
+      Cross-Origin-Opener-Policy: "same-origin"
+      Content-Security-Policy: "default-src 'self'; script-src 'self' https://cdn.tailwindcss.com; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://amnesia-shh.duckdns.org; form-action 'self'; base-uri 'self';"
