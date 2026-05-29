@@ -123,10 +123,8 @@ _start_expiration_listener()
 # ─── Swagger Models ──────────────────────────────────────────────────────
 api = server.api
 
-ns_secrets = Namespace('secrets', description='Operações de gestão de segredos')
+ns_secrets = Namespace('secrets', path='/api/secrets', description='Operações de gestão de segredos')
 
-# [CORREÇÃO 2]: Adicionado path='/' para que o endpoint fique na raiz (/healthz) 
-# e não sob o prefixo do namespace (/health/healthz).
 ns_health = Namespace('health', path='/', description='Status da aplicação')
 
 # Modelos de Request/Response
