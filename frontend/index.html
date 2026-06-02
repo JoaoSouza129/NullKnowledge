@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt">
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -9,7 +11,7 @@
                 darkMode: "class",
                 theme: {
                     extend: {
-                        "colors": {
+                        colors: {
                             "primary-container": "#0f172a",
                             "on-secondary-fixed-variant": "#3c475a",
                             "primary-fixed-dim": "#bec6e0",
@@ -58,13 +60,13 @@
                             "on-primary": "#283044",
                             "on-error-container": "#ffdad6"
                         },
-                        "borderRadius": {
+                        borderRadius: {
                             "DEFAULT": "0.125rem",
                             "lg": "0.25rem",
                             "xl": "0.5rem",
                             "full": "0.75rem"
                         },
-                        "spacing": {
+                        spacing: {
                             "md": "24px",
                             "xl": "80px",
                             "margin": "32px",
@@ -74,7 +76,7 @@
                             "lg": "48px",
                             "gutter": "24px"
                         },
-                        "fontFamily": {
+                        fontFamily: {
                             "h1": ["Montserrat"],
                             "body-md": ["Inter"],
                             "body-lg": ["Inter"],
@@ -83,7 +85,7 @@
                             "h2": ["Montserrat"],
                             "caption": ["Inter"]
                         },
-                        "fontSize": {
+                        fontSize: {
                             "h1": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
                             "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
                             "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
@@ -100,10 +102,8 @@
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" crossorigin="anonymous"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600&amp;display=swap" 
-          rel="stylesheet" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" 
-          rel="stylesheet" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600&amp;display=swap" rel="stylesheet" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" crossorigin="anonymous" />
 
     <style>
         body { background-color: #020617; }
@@ -153,140 +153,100 @@
 </head>
 
 <body class="text-on-surface min-h-screen flex flex-col font-body-md antialiased overflow-x-hidden">
-    <!-- TopAppBar -->
-    <header
-        class="bg-surface/60 backdrop-blur-xl dark:bg-surface-dim/60 fixed top-0 w-full z-50 border-b border-primary/20 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-surface-container-lowest/50">
+    <header class="bg-surface/60 backdrop-blur-xl dark:bg-surface-dim/60 fixed top-0 w-full z-50 border-b border-white/5 shadow-lg shadow-surface-container-lowest/50">
         <div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto w-full">
-            <!-- Logo -->
             <div class="flex items-center gap-4">
-                <span class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface">Amnesia
-                    Shh</span>
+                <span class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface">Amnesia Shh</span>
             </div>
-            <button
-                class="active:scale-95 transition-transform btn-secondary font-mono-label text-mono-label px-4 py-2 rounded-DEFAULT flex items-center gap-2">
+            <button class="active:scale-95 transition-transform btn-secondary font-mono-label text-mono-label px-4 py-2 rounded-DEFAULT flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
                 SEGURO
             </button>
         </div>
     </header>
-    <!-- Main Content Canvas -->
-    <main
-        class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col items-center justify-center gap-lg">
+
+    <main class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col items-center justify-center gap-lg">
         <img src="logo.png" alt="Logo" class="h-60 w-auto">
-        <!-- Transmission Interface Container -->
+        
         <div class="w-full max-w-5xl glass-panel rounded-xl overflow-hidden flex flex-col lg:flex-row">
-            <!-- Left Panel: Payload Input -->
-            <div
-                class="flex-1 p-margin border-b lg:border-b-0 lg:border-r border-outline-variant/30 flex flex-col gap-6">
+            <div class="flex-1 p-margin border-b lg:border-b-0 lg:border-r border-outline-variant/30 flex flex-col gap-6">
                 <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-primary text-[28px]"
-                        style="font-variation-settings: 'FILL' 1;">lock</span>
+                    <span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">lock</span>
                     <h2 class="font-h3 text-h3 text-on-surface">Novo Segredo</h2>
                 </div>
                 <p class="font-body-md text-on-surface-variant/80">
                     Encriptação end-to-end. O servidor nunca vê o conteúdo em claro.
                 </p>
                 <div class="relative flex-grow min-h-[300px]">
-                    <div
-                        class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
-                        <textarea id="msg"
-                            class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label"
-                            placeholder="Escrever aqui o segredo..."></textarea>
+                    <div class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
+                        <textarea id="msg" class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label" placeholder="Escrever aqui o segredo..."></textarea>
                     </div>
                 </div>
             </div>
-            <!-- Right Panel: Configuration & Action -->
+            
             <div class="w-full lg:w-[400px] p-margin bg-surface-container-low/30 flex flex-col gap-8">
                 <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-primary text-[24px]">settings_suggest</span>
                     <h3 class="font-body-lg text-body-lg text-on-surface font-semibold">Configuração</h3>
                 </div>
                 <div class="flex flex-col gap-6">
-                    <!-- TTL Dropdown -->
                     <div class="flex flex-col gap-2">
                         <label class="font-mono-label text-mono-label text-on-surface-variant flex items-center gap-2">
                             <span class="material-symbols-outlined text-[16px]">hourglass_empty</span>
                             Validade
                         </label>
-                        <select id="ttl"
-                            class="input-glass w-full py-3 px-4 rounded-DEFAULT font-body-md cursor-pointer appearance-none bg-surface-container-lowest/80">
+                        <select id="ttl" class="input-glass w-full py-3 px-4 rounded-DEFAULT font-body-md cursor-pointer appearance-none bg-surface-container-lowest/80">
                             <option value="3600">1 hora</option>
                             <option value="86400" selected>1 dia</option>
                             <option value="604800">7 dias</option>
                         </select>
                     </div>
-                    <!-- One-Time View Toggle -->
-                    <div
-                        class="flex items-center justify-between p-4 rounded-lg bg-surface-container-highest/20 border border-outline-variant/20">
+                    <div class="flex items-center justify-between p-4 rounded-lg bg-surface-container-highest/20 border border-outline-variant/20">
                         <div class="flex flex-col">
-                            <span class="font-mono-label text-mono-label text-on-surface">Destruir o segredo após a
-                                leitura</span>
-
+                            <span class="font-mono-label text-mono-label text-on-surface">Destruir o segredo após a leitura</span>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input id="oneTime" checked="" class="sr-only peer" type="checkbox" value="" />
-                            <div
-                                class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#22d3ee] shadow-[0_0_10px_rgba(34,211,238,0.3)_inset]">
-                            </div>
+                            <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#22d3ee] shadow-[0_0_10px_rgba(34,211,238,0.3)_inset]"></div>
                         </label>
                     </div>
                     <div class="mt-auto pt-6 border-t border-outline-variant/20">
-                        <button id="btnSend"
-                            class="w-full btn-primary font-mono-label text-mono-label py-4 rounded-DEFAULT flex items-center justify-center gap-2 uppercase tracking-widest">
-                            <span class="material-symbols-outlined text-[20px]"
-                                style="font-variation-settings: 'FILL' 1;">lock_person</span>
+                        <button id="btnSend" class="w-full btn-primary font-mono-label text-mono-label py-4 rounded-DEFAULT flex items-center justify-center gap-2 uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">lock_person</span>
                             Gerar Link Seguro
                         </button>
                     </div>
                 </div>
             </div>
-
-        </div>
-        </div>
-        <!-- Result Panel -->
-        <div id="result"
-            class="w-full max-w-5xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative d-none"
-            style="display: none;">
-            <!-- Glitch decorative top border -->
-            <div
-                class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80">
-            </div>
+        </div> <div id="result" class="w-full max-w-5xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative" style="display: none;">
+            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80"></div>
             <div class="p-margin flex flex-col gap-6">
-                <!-- Status Header -->
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div class="flex items-center gap-3">
-                        <div
-                            class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
+                        <div class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
                             <span class="material-symbols-outlined">enhanced_encryption</span>
                         </div>
                         <div>
                             <h2 class="font-h3 text-h3 text-on-surface">Segredo Encriptado</h2>
-                            <p class="font-caption text-caption text-on-surface-variant font-mono">Pronto para
-                                partilha</p>
+                            <p class="font-caption text-caption text-on-surface-variant font-mono">Pronto para partilha</p>
                         </div>
                     </div>
-                    <div
-                        class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
+                    <div class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
                         AES-256
                     </div>
                 </div>
-                <!-- Shareable Link -->
                 <div class="flex flex-col gap-3">
                     <label class="font-mono-label text-mono-label text-on-surface">Link Seguro</label>
                     <div class="flex flex-col sm:flex-row gap-2">
-                        <div
-                            class="flex-grow bg-surface-container-lowest/80 border border-cyan-400/30 rounded-DEFAULT p-4 font-mono-label text-mono-label text-primary truncate overflow-auto">
-                            <input type="text" id="link"
-                                class="w-full bg-transparent border-none outline-none text-primary" readonly />
+                        <div class="flex-grow bg-surface-container-lowest/80 border border-cyan-400/30 rounded-DEFAULT p-4 font-mono-label text-mono-label text-primary truncate overflow-auto">
+                            <input type="text" id="link" class="w-full bg-transparent border-none outline-none text-primary" readonly />
                         </div>
-                        <button onclick="navigator.clipboard.writeText(document.getElementById('link').value)"
-                            class="btn-secondary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap">
+                        <button onclick="navigator.clipboard.writeText(document.getElementById('link').value)" class="btn-secondary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap">
                             <span class="material-symbols-outlined text-[18px]">content_copy</span>
                             Copiar
                         </button>
                     </div>
                 </div>
-                <!-- Warning Badge -->
                 <div class="mt-2 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 flex items-start gap-3">
                     <span class="material-symbols-outlined text-amber-400 text-[20px] mt-0.5">warning</span>
                     <p class="font-caption text-caption text-amber-200/80">
@@ -296,20 +256,15 @@
             </div>
         </div>
 
-        <!-- Error Panel -->
-        <div id="error"
-            class="w-full max-w-5xl bg-error-container/20 border border-error/30 rounded-xl overflow-hidden flex flex-col p-margin d-none"
-            style="display: none;">
+        <div id="error" class="w-full max-w-5xl bg-error-container/20 border border-error/30 rounded-xl overflow-hidden flex flex-col p-margin" style="display: none;">
             <div class="flex items-start gap-3">
                 <span class="material-symbols-outlined text-error text-[20px] mt-0.5">error</span>
                 <p class="font-body-md text-error/90"></p>
             </div>
         </div>
-
     </main>
-    <!-- Footer -->
-    <footer
-        class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-lg border-t border-outline-variant/30 border-t border-white/5 flat mt-auto">
+
+    <footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-lg border-t border-white/5 mt-auto">
         <div class="flex flex-col md:flex-row justify-between items-center px-margin gap-base max-w-7xl mx-auto w-full">
             <div class="font-mono-label text-mono-label text-on-surface">
                 Amnesia Shh © 2026 • Encriptação End-to-end.
@@ -320,5 +275,4 @@
 
 <script src="crypto.js"></script>
 <script src="script.js"></script>
-
 </html>

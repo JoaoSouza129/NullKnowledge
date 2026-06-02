@@ -1,16 +1,18 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt">
 <head>
     <meta charset="utf-8" />
-    <base href="/"> 
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Amnesia Shh</title>
-    
+
+    <!-- 1. Configuração Nativa na Janela Global antes do CDN -->
     <script id="tailwind-config">
         window.tailwind = {
             config: {
                 darkMode: "class",
                 theme: {
                     extend: {
-                        "colors": {
+                        colors: {
                             "primary-container": "#0f172a",
                             "on-secondary-fixed-variant": "#3c475a",
                             "primary-fixed-dim": "#bec6e0",
@@ -59,13 +61,13 @@
                             "on-primary": "#283044",
                             "on-error-container": "#ffdad6"
                         },
-                        "borderRadius": {
+                        borderRadius: {
                             "DEFAULT": "0.125rem",
                             "lg": "0.25rem",
                             "xl": "0.5rem",
                             "full": "0.75rem"
                         },
-                        "spacing": {
+                        spacing: {
                             "md": "24px",
                             "xl": "80px",
                             "margin": "32px",
@@ -75,7 +77,7 @@
                             "lg": "48px",
                             "gutter": "24px"
                         },
-                        "fontFamily": {
+                        fontFamily: {
                             "h1": ["Montserrat"],
                             "body-md": ["Inter"],
                             "body-lg": ["Inter"],
@@ -84,7 +86,7 @@
                             "h2": ["Montserrat"],
                             "caption": ["Inter"]
                         },
-                        "fontSize": {
+                        fontSize: {
                             "h1": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
                             "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
                             "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
@@ -99,13 +101,12 @@
         };
     </script>
 
+    <!-- 2. Carregamento do Script do CDN -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" crossorigin="anonymous"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600&amp;display=swap" 
-          rel="stylesheet" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" 
-          rel="stylesheet" crossorigin="anonymous" />
-          
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@600&amp;display=swap" rel="stylesheet" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" crossorigin="anonymous" />
+
     <style>
         body { background-color: #020617; }
         .glass-panel {
