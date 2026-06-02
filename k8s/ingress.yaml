@@ -6,7 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: "amnesia-shh-security-headers@kubernetescrd"
+    # ALTERAÇÃO: Removido o middleware security-headers para deixar o tráfego fluir livremente para o CDN do Tailwind
 spec:
   ingressClassName: traefik
   tls:
