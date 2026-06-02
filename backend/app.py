@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from typing import Final
 
 import redis
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 from flask_restx import Api, Namespace, Resource, fields
 
@@ -52,9 +52,18 @@ log = logging.getLogger("secure-share")
 # ─── App e dependências ───────────────────────────────────────────────────
 class Server():
     def __init__(self,):
-        self.app= Flask(__name__)
-        self.cors= CORS(self.app, origins=CONFIG.allowed_origin)
-        self.api= Api(self.app,
+        self.app = Flask(__name__)
+        
+        # 1. CORS configurado centralmente e removido do after_request manual para evitar duplicações
+        self.cors = CORS(
+            self.app, 
+            resources={r"/*": {"origins": CONFIG.allowed_origin}},
+            supports_credentials=True if CONFIG.allowed_origin != "*" else False,
+            allow_headers=["Content-Type", "Authorization"],
+            methods=["GET", "POST", "OPTIONS"]
+        )
+        
+        self.api = Api(self.app,
                       version='1.0',
                       title="API do site amnesiashhh",
                       description="Uma API que encripta um segredo e devolve-o para quem tem o link, sem saber qual o segredo original",
@@ -62,40 +71,42 @@ class Server():
                       )
     def run(self,):
         self.app.run(
+            host="0.0.0.0",  # Garante que ouve fora do contentor (Docker/K8s)
             port=8081
         )
 
 # ─── Inicialização do Servidor ────────────────────────────────────────────
 server = Server()
-
-# [CORREÇÃO 1]: Expor a instância do Flask globalmente para o Gunicorn a encontrar ("app:app")
 app = server.app  
 
-# ─── [SOLUÇÃO DE SEGURANÇA WEB]: Injeção Global de Cabeçalhos HTTP ───────
-@app.after_request
-def inject_security_headers(response):
-    """Aplica as políticas de CSP, COEP e CORS corretas a todas as respostas."""
-    
-    # Resolve o erro ERR_BLOCKED_BY_RESPONSE do COEP, permitindo CDNs externos
-    response.headers["Cross-Origin-Embedder-Policy"] = "unsafe-none"
-    
-    # Política CSP unificada para o teu Frontend, API e documentação Swagger (/docs)
-    csp_policy = (
-        "default-src 'self'; "
-        "script-src 'self' https://cdn.tailwindcss.com 'unsafe-inline' 'unsafe-eval'; "
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-        "font-src 'self' https://fonts.gstatic.com; "
-        "connect-src 'self' https://amnesia-shh.duckdns.org; "
-        "img-src 'self' data: https://online.swagger.io;"
-    )
-    response.headers["Content-Security-Policy"] = csp_policy
-    
-    # Garante que as credenciais de CORS funcionam em ambientes de produção
-    response.headers["Access-Control-Allow-Origin"] = CONFIG.allowed_origin
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
-    
-    return response
+# ─── [SOLUÇÃO DE SEGURANÇA WEB]: Injeção Global via Middleware WSGI ───────
+class SecurityHeadersMiddleware:
+    """Middleware WSGI para intercetar TODAS as respostas (Flask, RESTx, Swagger) 
+    e garantir a aplicação de CSP e COEP sem falhas na pipeline."""
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        def custom_start_response(status, headers, exc_info=None):
+            # Adiciona os cabeçalhos de segurança necessários à lista existente
+            headers.append(("Cross-Origin-Embedder-Policy", "unsafe-none"))
+            headers.append(("X-Content-Type-Options", "nosniff"))
+            
+            csp_policy = (
+                "default-src 'self'; "
+                "script-src 'self' https://cdn.tailwindcss.com 'unsafe-inline' 'unsafe-eval'; "
+                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+                "font-src 'self' https://fonts.gstatic.com; "
+                "connect-src 'self' https://amnesia-shh.duckdns.org; "
+                "img-src 'self' data: https://online.swagger.io;"
+            )
+            headers.append(("Content-Security-Policy", csp_policy))
+            return start_response(status, headers, exc_info)
+        
+        return self.app(environ, custom_start_response)
+
+# Aplica o middleware à aplicação Flask
+app.wsgi_app = SecurityHeadersMiddleware(app.wsgi_app)
 
 
 db: Final[redis.Redis] = redis.Redis(
@@ -109,21 +120,15 @@ db: Final[redis.Redis] = redis.Redis(
 # ─── Redis Keyspace Notifications (log de expiração por TTL) ──────────────
 
 def _start_expiration_listener() -> None:
-    """Subscreve eventos de expiração do Redis numa thread daemon.
-
-    Requer notify-keyspace-events com pelo menos 'Ex'.
-    A config é aplicada automaticamente no arranque.
-    """
+    """Subscreve eventos de expiração do Redis numa thread daemon."""
     def _listen():
         try:
-            # Ativa notificações de expiração (idempotente)
             db.config_set("notify-keyspace-events", "Ex")
             log.info("redis_keyspace_notifications enabled (Ex)")
         except redis.RedisError as e:
             log.warning("could not enable keyspace notifications: %s", e)
             return
 
-        # Ligação dedicada para pub/sub (bloqueante)
         pubsub = db.pubsub()
         pubsub.subscribe("__keyevent@0__:expired")
         log.info("expiration_listener started")
@@ -135,7 +140,6 @@ def _start_expiration_listener() -> None:
             if isinstance(key, bytes):
                 key = key.decode("utf-8", errors="replace")
 
-            # Ignora chaves de metadata (meta:uuid) para não duplicar logs
             if key.startswith("meta:"):
                 continue
 
@@ -151,7 +155,6 @@ _start_expiration_listener()
 api = server.api
 
 ns_secrets = Namespace('secrets', path='/api/secrets', description='Operações de gestão de segredos')
-
 ns_health = Namespace('health', path='/', description='Status da aplicação')
 
 # Modelos de Request/Response
@@ -177,14 +180,13 @@ health_response = api.model('HealthStatus', {
     'status': fields.String(description='Status da aplicação', example='ok')
 })
 
-# Registar namespaces
 api.add_namespace(ns_secrets)
 api.add_namespace(ns_health)
 
 # ─── Endpoints de Segredos ────────────────────────────────────────────────
 @ns_secrets.route('')
 class SecretsList(Resource):
-    @ns_secrets.doc('create_secret', params={})
+    @ns_secrets.doc('create_secret')
     @ns_secrets.expect(secret_create_model)
     @ns_secrets.response(201, 'Segredo criado com sucesso', secret_create_response)
     @ns_secrets.response(400, 'Conteúdo em falta ou inválido', error_response)
@@ -209,7 +211,6 @@ class SecretsList(Resource):
 
         one_time = bool(data.get("one_time", True))
 
-        # Geração de Short ID seguro (12 caracteres alfanuméricos/símbolos seguros)
         secret_id = secrets.token_urlsafe(9)
 
         pipe = db.pipeline()
@@ -230,8 +231,6 @@ class SecretsDetail(Resource):
     def get(self, secret_id):
         """Recupera um segredo cifrado pelo ID. Se for one-time, apaga-o após leitura."""
         
-        # Validação de segurança para Short IDs (apenas alfanuméricos, hífen e underscore)
-        # Impede caracteres maliciosos de subirem para o Redis
         if not all(c.isalnum() or c in ["-", "_"] for c in secret_id):
             return {"error": "invalid id format"}, 400
 
@@ -239,7 +238,8 @@ class SecretsDetail(Resource):
 
         if is_one_time:
             raw_content = db.execute_command("GETDEL", secret_id)
-            db.delete(f"meta:{secret_id}")
+            if raw_content is not None:
+                db.delete(f"meta:{secret_id}")
             
             if isinstance(raw_content, bytes):
                 content = raw_content.decode('utf-8')
