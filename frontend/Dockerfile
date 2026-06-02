@@ -1,6 +1,12 @@
 FROM nginx:1.27-alpine
 
-COPY index.html view.html crypto.js script.js tailwind.js logo.png /usr/share/nginx/html/
+# Limpa o lixo padrão do Nginx para evitar conflitos
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copia TODOS os ficheiros da diretoria atual para o servidor estático
+COPY . /usr/share/nginx/html/
+
+# Configuração do template do proxy para o backend
 COPY nginx.conf /etc/nginx/nginx.conf.template
 
 ENV BACKEND_HOST=backend \
