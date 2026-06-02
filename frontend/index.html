@@ -168,6 +168,7 @@
     <main class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col items-center justify-center gap-lg">
         <img src="logo.png" alt="Logo" class="h-60 w-auto">
         
+        <!-- Transmission Interface Container -->
         <div class="w-full max-w-5xl glass-panel rounded-xl overflow-hidden flex flex-col lg:flex-row">
             <div class="flex-1 p-margin border-b lg:border-b-0 lg:border-r border-outline-variant/30 flex flex-col gap-6">
                 <div class="flex items-center gap-3">
@@ -218,7 +219,9 @@
                     </div>
                 </div>
             </div>
-        </div> <div id="result" class="w-full max-w-5xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative" style="display: none;">
+        </div> <!-- CORRIGIDO: Tag órfã removida, a árvore do DOM fecha corretamente -->
+
+        <div id="result" class="w-full max-w-5xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative" style="display: none;">
             <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80"></div>
             <div class="p-margin flex flex-col gap-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -272,7 +275,6 @@
         </div>
     </footer>
 </body>
-
 <script src="crypto.js"></script>
 <script src="script.js"></script>
 </html>

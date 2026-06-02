@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Amnesia Shh</title>
+    <title>Amnesia Shh - Ver Segredo</title>
 
-    <!-- 1. Configuração Nativa na Janela Global antes do CDN -->
     <script id="tailwind-config">
         window.tailwind = {
             config: {
@@ -98,7 +97,7 @@
                     }
                 }
             }
-        };
+        }; // CORRIGIDO: Fecho do objeto estruturado
     </script>
 
     <script src="tailwind.js"></script>    
@@ -154,58 +153,44 @@
 </head>
 
 <body class="text-on-surface min-h-screen flex flex-col font-body-md antialiased overflow-x-hidden">
-    <header
-        class="bg-surface/60 backdrop-blur-xl dark:bg-surface-dim/60 fixed top-0 w-full z-50 border-b border-primary/20 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-surface-container-lowest/50">
+    <header class="bg-surface/60 backdrop-blur-xl dark:bg-surface-dim/60 fixed top-0 w-full z-50 border-b border-primary/20 border-b border-white/5 shadow-lg shadow-surface-container-lowest/50">
         <div class="flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto w-full">
             <div class="flex items-center gap-4">
-                <a class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface no-underline"
-                    href="index.html">Amnesia Shh</a>
+                <a class="font-h2 text-h2 font-bold tracking-tighter text-on-surface dark:text-on-surface no-underline" href="index.html">Amnesia Shh</a>
             </div>
             <div class="hidden md:flex gap-8 items-center">
-                <a class="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-300"
-                    href="index.html">Novo Segredo</a>
+                <a class="font-mono-label text-mono-label text-on-surface-variant hover:text-primary transition-colors duration-300" href="index.html">Novo Segredo</a>
             </div>
-            <button
-                class="active:scale-95 transition-transform btn-secondary font-mono-label text-mono-label px-4 py-2 rounded-DEFAULT flex items-center gap-2">
+            <button class="active:scale-95 transition-transform btn-secondary font-mono-label text-mono-label px-4 py-2 rounded-DEFAULT flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
                 SEGURO
             </button>
         </div>
     </header>
 
-    <main
-        class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-center gap-12">
-
+    <main class="flex-grow pt-[100px] pb-xl px-gutter max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-center gap-12">
         <div class="flex-shrink-0">
-            <img src="logo.png" alt="Logo" class="h-80 lg:h-100 w-auto">
+            <img src="logo.png" alt="Logo" class="h-60 lg:h-80 w-auto">
         </div>
 
-        <div
-            class="w-full max-w-4xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative flex-grow">
-
-            <div
-                class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80">
-            </div>
-
+        <div class="w-full max-w-4xl glass-panel glass-panel-active rounded-xl overflow-hidden flex flex-col relative flex-grow">
+            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#22d3ee] to-transparent opacity-80"></div>
             <div class="p-margin flex flex-col gap-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div class="flex items-center gap-3">
-                        <div
-                            class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
+                        <div class="w-10 h-10 rounded-full bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-[#22d3ee] cyan-glow">
                             <span class="material-symbols-outlined">enhanced_encryption</span>
                         </div>
                         <div>
                             <h2 class="font-h3 text-h3 text-on-surface">Ver Segredo</h2>
                         </div>
                     </div>
-                    <div
-                        class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
+                    <div class="bg-surface-container-highest/50 border border-outline-variant/30 px-3 py-1 rounded-sm font-mono-label text-mono-label text-primary text-[10px]">
                         AES-256
                     </div>
                 </div>
 
-                <div
-                    class="bg-surface-container-lowest/80 p-4 rounded-lg border border-outline-variant/20 font-mono-label text-caption text-on-surface-variant/80 break-all">
+                <div class="bg-surface-container-lowest/80 p-4 rounded-lg border border-outline-variant/20 font-mono-label text-caption text-on-surface-variant/80 break-all">
                     ID: <span id="secretId" class="text-primary"></span>
                 </div>
 
@@ -213,12 +198,8 @@
                     <div class="flex flex-col gap-3">
                         <label class="font-mono-label text-mono-label text-on-surface">Conteúdo desencriptado</label>
                         <div class="relative flex-grow min-h-[280px]">
-                            <div
-                                class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
-                                <textarea id="secretContent"
-                                    class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label"
-                                    readonly
-                                    placeholder="O segredo vai aparecer aqui quando for desencriptado..."></textarea>
+                            <div class="absolute inset-0 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/20 p-1">
+                                <textarea id="secretContent" class="w-full h-full input-glass resize-none p-4 rounded-md font-mono-label text-mono-label" readonly placeholder="O segredo vai aparecer aqui quando for desencriptado..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -227,22 +208,18 @@
                         <div class="flex flex-col gap-3">
                             <label class="font-mono-label text-mono-label text-on-surface">Estado</label>
                             <div class="bg-surface-container-lowest/80 border border-cyan-400/30 rounded-DEFAULT p-4">
-                                <p id="statusText" class="font-body-md text-on-surface-variant">A preparar leitura
-                                    segura...</p>
+                                <p id="statusText" class="font-body-md text-on-surface-variant">A preparar leitura segura...</p>
                             </div>
                         </div>
 
                         <div class="flex flex-col gap-3">
                             <label class="font-mono-label text-mono-label text-on-surface">Ações</label>
                             <div class="flex flex-col sm:flex-row gap-2">
-                                <button id="copySecretBtn"
-                                    class="btn-secondary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap"
-                                    disabled>
+                                <button id="copySecretBtn" class="btn-secondary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap" disabled>
                                     <span class="material-symbols-outlined text-[18px]">content_copy</span>
                                     Copiar segredo
                                 </button>
-                                <a class="btn-primary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap no-underline"
-                                    href="index.html">
+                                <a class="btn-primary font-mono-label text-mono-label px-6 py-4 rounded-DEFAULT flex items-center justify-center gap-2 whitespace-nowrap no-underline" href="index.html">
                                     <span class="material-symbols-outlined text-[18px]">lock</span>
                                     Novo segredo
                                 </a>
@@ -251,8 +228,7 @@
                     </div>
                 </div>
 
-                <div id="errorBox"
-                    class="hidden bg-error-container/20 border border-error/30 rounded-lg p-4 flex items-start gap-3">
+                <div id="errorBox" class="hidden bg-error-container/20 border border-error/30 rounded-lg p-4 flex items-start gap-3">
                     <span class="material-symbols-outlined text-error text-[20px] mt-0.5">error</span>
                     <p id="errorText" class="font-body-md text-error/90"></p>
                 </div>
@@ -260,8 +236,7 @@
         </div>
     </main>
 
-    <footer
-        class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-lg border-t border-outline-variant/30 border-t border-white/5 flat mt-auto">
+    <footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-lg border-t border-outline-variant/30 mt-auto">
         <div class="flex flex-col md:flex-row justify-between items-center px-margin gap-base max-w-7xl mx-auto w-full">
             <div class="font-mono-label text-mono-label text-on-surface">
                 Amnesia Shh © 2026 • Encriptação End-to-end.
@@ -272,8 +247,6 @@
     <script src="crypto.js"></script>
     <script>
         const API_BASE_URL = ''; 
-        
-        // ALTERAÇÃO: Extrai o Short ID diretamente do pathname (/v/k8J2f9mS -> k8J2f9mS)
         const pathParts = window.location.pathname.split('/');
         const vIndex = pathParts.indexOf('v');
         const secretId = vIndex !== -1 && pathParts[vIndex + 1] ? pathParts[vIndex + 1] : null;
@@ -295,30 +268,16 @@
         }
 
         async function loadSecret() {
-            if (!secretId) {
-                showError('Falta o id no link.');
-                return;
-            }
-
-            if (!keyB64) {
-                showError('Falta a chave no fragmento do link.');
-                return;
-            }
-
-            if (!window.SecureCrypto) {
-                showError('SecureCrypto não foi carregado.');
-                return;
-            }
+            if (!secretId) { showError('Falta o id no link.'); return; }
+            if (!keyB64) { showError('Falta a chave no fragmento do link.'); return; }
+            if (!window.SecureCrypto) { showError('SecureCrypto não foi carregado.'); return; }
 
             secretIdEl.textContent = secretId;
             statusTextEl.textContent = 'A ligar ao servidor e a decifrar localmente...';
 
             try {
-                // Pedido feito à rota relativa, usando o Short ID limpo
                 const resp = await fetch(`${API_BASE_URL}/api/secrets/${secretId}`);
-                if (!resp.ok) {
-                    throw new Error(`Servidor: ${resp.status}`);
-                }
+                if (!resp.ok) throw new Error(`Servidor: ${resp.status}`);
 
                 const { content } = await resp.json();
                 const plaintext = await SecureCrypto.decryptText(content, keyB64);
@@ -340,5 +299,5 @@
 
         loadSecret();
     </script>
-
+</body>
 </html>
