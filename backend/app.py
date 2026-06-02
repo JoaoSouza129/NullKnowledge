@@ -71,6 +71,33 @@ server = Server()
 # [CORREÇÃO 1]: Expor a instância do Flask globalmente para o Gunicorn a encontrar ("app:app")
 app = server.app  
 
+# ─── [SOLUÇÃO DE SEGURANÇA WEB]: Injeção Global de Cabeçalhos HTTP ───────
+@app.after_request
+def inject_security_headers(response):
+    """Aplica as políticas de CSP, COEP e CORS corretas a todas as respostas."""
+    
+    # Resolve o erro ERR_BLOCKED_BY_RESPONSE do COEP, permitindo CDNs externos
+    response.headers["Cross-Origin-Embedder-Policy"] = "unsafe-none"
+    
+    # Política CSP unificada para o teu Frontend, API e documentação Swagger (/docs)
+    csp_policy = (
+        "default-src 'self'; "
+        "script-src 'self' https://cdn.tailwindcss.com 'unsafe-inline' 'unsafe-eval'; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "connect-src 'self' https://amnesia-shh.duckdns.org; "
+        "img-src 'self' data: https://online.swagger.io;"
+    )
+    response.headers["Content-Security-Policy"] = csp_policy
+    
+    # Garante que as credenciais de CORS funcionam em ambientes de produção
+    response.headers["Access-Control-Allow-Origin"] = CONFIG.allowed_origin
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    
+    return response
+
+
 db: Final[redis.Redis] = redis.Redis(
     host=CONFIG.redis_host,
     port=CONFIG.redis_port,
@@ -231,7 +258,6 @@ class SecretsDetail(Resource):
 
 # ─── Endpoints de Status ──────────────────────────────────────────────────
 
-# [CORREÇÃO 3]: Corrigido o typo de '/healtz' para '/healthz', que é o que o K8s espera.
 @ns_health.route('/healthz')
 class HealthReadiness(Resource):
     @ns_health.doc('healthz')
