@@ -15,3 +15,8 @@ kubectl exec -n amnesia-shh -it redis-0 -- redis-cli -a $REDIS_PWD
 export KUBECONFIG=~/.kube/config-amnesia
 REDIS_PWD=$(kubectl get secret amnesia-secret -n amnesia-shh -o jsonpath='{.data.REDIS_PASSWORD}' | base64 -d)
 kubectl exec -n amnesia-shh -it redis-0 -- redis-cli -a $REDIS_PWD
+
+
+# Push com rebase
+git pull --rebase origin main
+git push origin main
